@@ -1,0 +1,254 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Dark theme */
+  --bg-base: #0b0f1a;
+  --bg-elevated: #0f172a;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --border-subtle: 1px solid rgba(255, 255, 255, 0.1);
+  --text-primary: #f8fafc;
+  --text-secondary: rgba(248, 250, 252, 0.8);
+  --text-muted: rgba(248, 250, 252, 0.6);
+  /* Gradient accent */
+  --accent-from: #6366f1;
+  --accent-to: #22d3ee;
+  --gradient-accent: linear-gradient(135deg, var(--accent-from), var(--accent-to));
+  /* Glow */
+  --glow-accent: 0 0 40px rgba(99, 102, 241, 0.3);
+  --glow-accent-strong: 0 0 60px rgba(99, 102, 241, 0.5);
+  --glow-cyan: 0 0 30px rgba(34, 211, 238, 0.3);
+  /* Typography */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.12em;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hero floating gradient animation */
+@keyframes float-gradient {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  33% { transform: translate(30px, -20px) scale(1.05); opacity: 0.8; }
+  66% { transform: translate(-20px, 20px) scale(0.95); opacity: 0.5; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.25); }
+  50% { box-shadow: 0 0 60px rgba(99, 102, 241, 0.4); }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Section theme: balls popping (mobile) */
+@keyframes ball-pop {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  25% { transform: translate(10px, -15px) scale(1.1); opacity: 0.9; }
+  50% { transform: translate(-8px, 10px) scale(0.95); opacity: 0.6; }
+  75% { transform: translate(5px, 5px) scale(1.05); opacity: 0.8; }
+}
+.ball-float { animation: ball-pop 6s ease-in-out infinite; }
+.ball-float-2 { animation: ball-pop 7s ease-in-out infinite 1s; }
+.ball-float-3 { animation: ball-pop 5s ease-in-out infinite 2s; }
+.ball-float-4 { animation: ball-pop 8s ease-in-out infinite 0.5s; }
+.ball-float-5 { animation: ball-pop 6.5s ease-in-out infinite 1.5s; }
+.ball-float-6 { animation: ball-pop 7.5s ease-in-out infinite 2.5s; }
+
+/* Utility classes */
+.glass {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: var(--border-subtle);
+}
+
+.glass-nav {
+  background: rgba(11, 15, 26, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-glow {
+  background: var(--gradient-accent);
+  border-radius: 9999px;
+  box-shadow: var(--glow-accent);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.btn-glow:hover {
+  box-shadow: var(--glow-accent-strong);
+  transform: translateY(-2px);
+}
+
+.card-glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: var(--border-subtle);
+  border-radius: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-glass:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--glow-accent);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* Clamp typography */
+.hero-title {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.section-label {
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Logo glow */
+.logo-glow {
+  filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.4)) drop-shadow(0 0 40px rgba(34, 211, 238, 0.2));
+}
+
+/* Modal form inputs - dark theme */
+.input-dark {
+  @apply w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50;
+  @apply focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 focus:outline-none;
+}
+.input-dark option {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+/* About: flip cards + marquee */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Hero: floating glowing squares (diamonds) */
+.hero-glow-square {
+  border-radius: 6px;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@keyframes hero-square-drift-a {
+  0%,
+  100% {
+    transform: rotate(var(--sq-rot, 45deg)) translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: rotate(calc(var(--sq-rot, 45deg) + 7deg)) translate3d(14px, -22px, 0) scale(1.04);
+  }
+  66% {
+    transform: rotate(calc(var(--sq-rot, 45deg) - 5deg)) translate3d(-12px, 16px, 0) scale(0.96);
+  }
+}
+
+@keyframes hero-square-drift-b {
+  0%,
+  100% {
+    transform: rotate(var(--sq-rot, 45deg)) translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: rotate(calc(var(--sq-rot, 45deg) - 8deg)) translate3d(-18px, -12px, 0) scale(1.06);
+  }
+}
+
+@keyframes hero-square-drift-c {
+  0%,
+  100% {
+    transform: rotate(var(--sq-rot, 45deg)) translate3d(0, 0, 0) scale(1);
+  }
+  25% {
+    transform: rotate(calc(var(--sq-rot, 45deg) + 6deg)) translate3d(10px, 20px, 0) scale(0.94);
+  }
+  75% {
+    transform: rotate(calc(var(--sq-rot, 45deg) - 4deg)) translate3d(16px, -14px, 0) scale(1.03);
+  }
+}
+
+@keyframes hero-square-drift-d {
+  0%,
+  100% {
+    transform: rotate(var(--sq-rot, 45deg)) translate3d(0, 0, 0) scale(1);
+  }
+  40% {
+    transform: rotate(calc(var(--sq-rot, 45deg) + 5deg)) translate3d(-8px, -20px, 0) scale(1.05);
+  }
+  70% {
+    transform: rotate(calc(var(--sq-rot, 45deg) - 6deg)) translate3d(12px, 10px, 0) scale(0.98);
+  }
+}
+
+.hero-glow-square--a {
+  animation-name: hero-square-drift-a;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+.hero-glow-square--b {
+  animation-name: hero-square-drift-b;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+.hero-glow-square--c {
+  animation-name: hero-square-drift-c;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+.hero-glow-square--d {
+  animation-name: hero-square-drift-d;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+  .hero-glow-square--a,
+  .hero-glow-square--b,
+  .hero-glow-square--c,
+  .hero-glow-square--d {
+    animation: none;
+  }
+}
+
