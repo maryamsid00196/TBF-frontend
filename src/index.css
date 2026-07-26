@@ -21,8 +21,15 @@
   --glow-cyan: 0 0 30px rgba(34, 211, 238, 0.3);
   /* Typography */
   --font-sans: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Geist', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --tracking-wide: 0.08em;
   --tracking-wider: 0.12em;
+  /* Secondary accent, used sparingly for a single "featured" CTA */
+  --accent-magenta-from: #a855f7;
+  --accent-magenta-to: #f472b6;
+  --gradient-magenta: linear-gradient(135deg, var(--accent-magenta-from), var(--accent-magenta-to));
+  --glow-magenta: 0 0 40px rgba(244, 114, 182, 0.3);
 }
 
 html {
@@ -76,57 +83,104 @@ body {
 
 /* Utility classes */
 .glass {
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: var(--border-subtle);
 }
 
 .glass-nav {
-  background: rgba(11, 15, 26, 0.96);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(11, 15, 26, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .btn-glow {
   background: var(--gradient-accent);
-  border-radius: 9999px;
+  border-radius: 0.5rem;
   box-shadow: var(--glow-accent);
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  transition: box-shadow 0.3s ease, transform 0.2s ease, filter 0.2s ease;
 }
 .btn-glow:hover {
   box-shadow: var(--glow-accent-strong);
   transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.btn-glow-magenta {
+  background: var(--gradient-magenta);
+  border-radius: 0.5rem;
+  box-shadow: var(--glow-magenta);
+  transition: box-shadow 0.3s ease, transform 0.2s ease, filter 0.2s ease;
+}
+.btn-glow-magenta:hover {
+  box-shadow: 0 0 60px rgba(244, 114, 182, 0.45);
+  transform: translateY(-2px);
+  filter: brightness(1.05);
 }
 
 .card-glass {
   background: var(--bg-card);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: var(--border-subtle);
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .card-glass:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   box-shadow: var(--glow-accent);
-  border-color: rgba(99, 102, 241, 0.3);
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+/* Gradient text, for the single already-emphasized word/span per heading */
+.text-gradient-brand {
+  background: linear-gradient(to bottom right, #a5b4fc, #67e8f9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.text-gradient-magenta {
+  background: linear-gradient(to bottom right, var(--accent-magenta-from), var(--accent-magenta-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* Clamp typography */
 .hero-title {
+  font-family: var(--font-heading);
   font-size: clamp(2.5rem, 8vw, 5rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   line-height: 1.1;
 }
 
 .section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--font-mono);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 500;
+  padding: 0.35rem 0.9rem;
+  border-radius: 9999px;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+.section-label::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: currentColor;
+  flex-shrink: 0;
 }
 
 /* Logo glow */
@@ -136,8 +190,8 @@ body {
 
 /* Modal form inputs - dark theme */
 .input-dark {
-  @apply w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50;
-  @apply focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 focus:outline-none;
+  @apply w-full px-4 py-2.5 rounded-lg bg-white/[0.06] border border-white/15 text-white placeholder-white/50;
+  @apply focus:ring-2 focus:ring-cyan-400/60 focus:border-cyan-400/60 focus:outline-none;
 }
 .input-dark option {
   background: #0f172a;

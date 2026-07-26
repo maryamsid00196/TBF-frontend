@@ -151,14 +151,14 @@ export default function Admin() {
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-md glass rounded-2xl border border-white/10 p-8 shadow-2xl"
+          className="w-full max-w-md glass rounded-xl border border-white/10 p-8 shadow-2xl"
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 rounded-xl bg-indigo-500/20 text-cyan-400">
+            <div className="p-3 rounded-lg bg-indigo-500/20 text-cyan-400">
               <FiLock className="text-2xl" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">Team inbox</h1>
+              <h1 className="font-heading text-xl font-bold text-white">Team inbox</h1>
               <p className="text-sm text-white/60">Sign in with the admin credentials configured on the server (.env).</p>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function Admin() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-white">Admin</h1>
+            <h1 className="font-heading text-2xl font-bold text-white">Admin</h1>
             <p className="text-white/60 text-sm mt-1">
               {workspace === 'submissions'
                 ? 'Contact form and job applications'

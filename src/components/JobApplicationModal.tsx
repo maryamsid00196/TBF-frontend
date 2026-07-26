@@ -99,10 +99,10 @@ export default function JobApplicationModal() {
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
           onClick={(e) => e.stopPropagation()}
-          className="glass rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-white/10"
+          className="glass rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-white/10"
         >
-          <div className="sticky top-0 glass rounded-t-2xl border-b border-white/10 px-6 py-4 flex items-center justify-between">
-            <h2 id="job-modal-title" className="text-xl font-bold text-white">
+          <div className="sticky top-0 glass rounded-t-xl border-b border-white/10 px-6 py-4 flex items-center justify-between">
+            <h2 id="job-modal-title" className="font-heading text-xl font-bold text-white">
               Apply for Position
             </h2>
             <button
@@ -116,7 +116,7 @@ export default function JobApplicationModal() {
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
             {errors.root && (
-              <div className="p-3 rounded-xl bg-red-500/20 border border-red-500/30 text-red-300 text-sm" role="alert">
+              <div className="p-3 rounded-lg bg-red-500/20 border border-red-500/30 text-red-300 text-sm" role="alert">
                 {errors.root.message}
               </div>
             )}
@@ -200,7 +200,7 @@ export default function JobApplicationModal() {
                 type="file"
                 accept={RESUME_ACCEPT}
                 onChange={(e) => setResumeFile(e.target.files?.[0] ?? null)}
-                className="block w-full text-sm text-white/80 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-white/10 file:text-white file:font-medium hover:file:bg-white/15 cursor-pointer"
+                className="block w-full text-sm text-white/80 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-white/10 file:text-white file:font-medium hover:file:bg-white/15 cursor-pointer"
               />
               {resumeFile && (
                 <p className="mt-1 text-xs text-cyan-400/90">Selected: {resumeFile.name}</p>
@@ -254,7 +254,7 @@ export default function JobApplicationModal() {
               <button
                 type="button"
                 onClick={closeJobModal}
-                className="px-5 py-3 rounded-full border border-white/20 text-white/90 font-medium hover:bg-white/10 transition"
+                className="px-5 py-3 rounded-lg border border-white/20 text-white/90 font-medium hover:bg-white/10 transition"
               >
                 Cancel
               </button>

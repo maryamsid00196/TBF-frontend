@@ -3,9 +3,9 @@ import { motion } from 'framer-motion'
 import SectionBackdrop from '../components/SectionBackdrop'
 
 const services = [
-  { slug: 'real-estate', name: 'Real Estate', description: 'Full-service real estate solutions for commercial, residential, and advisory needs.' },
-  { slug: 'media', name: 'Media', description: 'Pre through post-production, graphic design, and full social media management.' },
-  { slug: 'software-development', name: 'Software Development', description: 'AI, web, mobile, and 3D. Custom software that scales with you.' },
+  { slug: 'real-estate', name: 'Real Estate', description: 'Full-service real estate solutions for commercial, residential, and advisory needs.', accent: '#818cf8' },
+  { slug: 'media', name: 'Media', description: 'Pre through post-production, graphic design, and full social media management.', accent: '#22d3ee' },
+  { slug: 'software-development', name: 'Software Development', description: 'AI, web, mobile, and 3D. Custom software that scales with you.', accent: '#c084fc' },
 ]
 
 export default function Services() {
@@ -55,8 +55,9 @@ export default function Services() {
                 <Link
                   to={`/services/${svc.slug}`}
                   className="card-glass block p-6 h-full group"
+                  style={{ borderTop: `2px solid ${svc.accent}66` }}
                 >
-                  <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition">{svc.name}</h3>
+                  <h3 className="font-heading text-xl font-bold text-white group-hover:text-cyan-400 transition">{svc.name}</h3>
                   <p className="mt-2 text-white/60 text-sm leading-relaxed">{svc.description}</p>
                   <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-cyan-400 group-hover:gap-2 transition-all">
                     Learn more →

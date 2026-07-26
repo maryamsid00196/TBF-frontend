@@ -90,7 +90,7 @@ export default function Careers() {
                   className="card-glass p-6 flex flex-wrap items-center justify-between gap-4"
                 >
                   <div>
-                    <h3 className="text-lg font-bold text-white">{job.title}</h3>
+                    <h3 className="font-heading text-lg font-bold text-white">{job.title}</h3>
                     {job.description && (
                       <p className="mt-2 text-sm text-white/55 leading-relaxed max-w-xl">{job.description}</p>
                     )}

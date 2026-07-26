@@ -86,10 +86,10 @@ export default function ContactModal() {
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
           onClick={(e) => e.stopPropagation()}
-          className="glass rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-white/10"
+          className="glass rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto border border-white/10"
         >
-          <div className="sticky top-0 glass rounded-t-2xl border-b border-white/10 px-6 py-4 flex items-center justify-between">
-            <h2 id="contact-modal-title" className="text-xl font-bold text-white">
+          <div className="sticky top-0 glass rounded-t-xl border-b border-white/10 px-6 py-4 flex items-center justify-between">
+            <h2 id="contact-modal-title" className="font-heading text-xl font-bold text-white">
               Contact Us
             </h2>
             <button
@@ -103,7 +103,7 @@ export default function ContactModal() {
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
             {errors.root && (
-              <div className="p-3 rounded-xl bg-red-500/20 border border-red-500/30 text-red-300 text-sm" role="alert">
+              <div className="p-3 rounded-lg bg-red-500/20 border border-red-500/30 text-red-300 text-sm" role="alert">
                 {errors.root.message}
               </div>
             )}
@@ -242,7 +242,7 @@ export default function ContactModal() {
               <button
                 type="button"
                 onClick={closeModal}
-                className="px-5 py-3 rounded-full border border-white/20 text-white/90 font-medium hover:bg-white/10 transition"
+                className="px-5 py-3 rounded-lg border border-white/20 text-white/90 font-medium hover:bg-white/10 transition"
               >
                 Cancel
               </button>

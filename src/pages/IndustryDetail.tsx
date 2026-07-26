@@ -14,7 +14,7 @@ export default function IndustryDetail() {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl lg:text-5xl font-bold"
+            className="font-heading text-4xl lg:text-5xl font-bold"
           >
             {name}
           </motion.h1>
@@ -28,12 +28,12 @@ export default function IndustryDetail() {
           </motion.p>
         </div>
       </section>
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-surface">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-gray-600 leading-relaxed text-lg"
+            className="text-white/70 leading-relaxed text-lg"
           >
             We understand the unique requirements of {name.toLowerCase()} facilities. Our teams are trained
             on industry-specific standards and compliance, and we tailor our janitorial, maintenance,
@@ -47,11 +47,11 @@ export default function IndustryDetail() {
           >
             <button
               onClick={() => openModal()}
-              className="px-6 py-3 bg-secondary text-white font-medium rounded-lg hover:bg-secondary/90"
+              className="btn-glow px-6 py-3 text-white font-medium"
             >
               Request a Service
             </button>
-            <Link to="/industries" className="px-6 py-3 border border-gray-300 rounded-lg font-medium hover:bg-gray-50">
+            <Link to="/industries" className="px-6 py-3 border border-white/20 rounded-lg font-medium text-white/90 hover:bg-white/10 transition-colors">
               Back to Industries
             </Link>
           </motion.div>

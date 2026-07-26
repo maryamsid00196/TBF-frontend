@@ -15,7 +15,7 @@ export default function Industries() {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl lg:text-5xl font-bold"
+            className="font-heading text-4xl lg:text-5xl font-bold"
           >
             Industries We Serve
           </motion.h1>
@@ -29,7 +29,7 @@ export default function Industries() {
           </motion.p>
         </div>
       </section>
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-surface">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {industries.map((name, i) => (
@@ -42,7 +42,7 @@ export default function Industries() {
               >
                 <Link
                   to={`/industries/${name.toLowerCase().replace(/\s+/g, '-')}`}
-                  className="block p-4 rounded-lg border border-gray-200 hover:border-primary/30 hover:bg-primary/5 transition text-center font-medium text-primary"
+                  className="block p-4 rounded-lg border border-white/10 bg-white/5 hover:border-cyan-400/30 hover:bg-white/10 transition-colors text-center font-medium text-white/80 hover:text-cyan-300"
                 >
                   {name}
                 </Link>

@@ -14,6 +14,8 @@ export default {
           cyan: '#22d3ee',
           from: '#6366f1',
           to: '#22d3ee',
+          purple: '#a855f7',
+          magenta: '#f472b6',
         },
         neutral: {
           light: 'rgba(255,255,255,0.05)',
@@ -22,9 +24,12 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        heading: ['Geist', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       backgroundImage: {
         'gradient-accent': 'linear-gradient(135deg, #6366f1, #22d3ee)',
+        'gradient-magenta': 'linear-gradient(135deg, #a855f7, #f472b6)',
         'gradient-radial': 'radial-gradient(ellipse at center, rgba(99,102,241,0.15) 0%, transparent 70%)',
         'gradient-hero': 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99,102,241,0.25), transparent), radial-gradient(ellipse 60% 40% at 80% 50%, rgba(34,211,238,0.15), transparent)',
       },
@@ -32,6 +37,7 @@ export default {
         'glow': '0 0 40px rgba(99, 102, 241, 0.3)',
         'glow-strong': '0 0 60px rgba(99, 102, 241, 0.5)',
         'glow-cyan': '0 0 30px rgba(34, 211, 238, 0.3)',
+        'glow-magenta': '0 0 40px rgba(244, 114, 182, 0.3)',
       },
       animation: {
         'float': 'float-gradient 15s ease-in-out infinite',

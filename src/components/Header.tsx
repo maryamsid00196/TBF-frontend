@@ -41,7 +41,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink-0 min-w-0" aria-label="TBG Home">
             <img src="/logo-badge.svg" alt="TBG" className="h-9 w-9 sm:h-11 sm:w-11 shrink-0 logo-glow" />
-            <span className="text-white font-semibold text-sm leading-tight sm:text-lg sm:leading-normal truncate sm:whitespace-normal">
+            <span className="font-heading text-white font-semibold text-sm leading-tight sm:text-lg sm:leading-normal truncate sm:whitespace-normal">
               Time Business Group
             </span>
           </Link>
@@ -78,7 +78,7 @@ export default function Header() {
                               <Link
                                 key={child.path}
                                 to={child.path}
-                                className="block px-4 py-2.5 text-sm text-white/90 hover:bg-white/10 hover:text-white transition"
+                                className="block px-4 py-2.5 text-sm text-white/90 hover:bg-white/[0.08] hover:text-cyan-300 transition-colors"
                                 onClick={() => setActiveDropdown(null)}
                               >
                                 {child.label}

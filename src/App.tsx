@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import { ContactModalProvider } from './context/ContactModalContext'
 import { JobApplicationModalProvider } from './context/JobApplicationModalContext'
 import Layout from './components/Layout'
+import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
@@ -14,6 +15,7 @@ function App() {
   return (
     <ContactModalProvider>
       <JobApplicationModalProvider>
+        <ScrollToTop />
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />

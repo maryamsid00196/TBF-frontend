@@ -107,10 +107,10 @@ export default function Home() {
                   to={`/services/${slug}`}
                   className="card-glass flex items-center gap-4 p-6 group"
                 >
-                  <div className="p-2.5 rounded-xl bg-white/10 text-cyan-400 group-hover:bg-gradient-accent group-hover:text-white transition-all duration-300 group-hover:scale-110">
+                  <div className="p-2.5 rounded-lg bg-white/10 text-cyan-400 group-hover:bg-gradient-accent group-hover:text-white transition-all duration-300 group-hover:scale-110">
                     <Icon className="text-2xl" />
                   </div>
-                  <span className="font-semibold text-white">{name}</span>
+                  <span className="font-heading font-semibold text-white">{name}</span>
                 </Link>
               </motion.div>
             ))}

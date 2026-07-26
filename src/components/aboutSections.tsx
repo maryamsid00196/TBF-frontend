@@ -20,13 +20,6 @@ import { useContactModal } from '../context/ContactModalContext'
 import Counter, { useCounterInView } from './Counter'
 import SectionBackdrop from './SectionBackdrop'
 
-export const HERO_TAGLINES = [
-  'Real Estate, Software, Media',
-  'Innovation meets execution',
-  'Partner for growth',
-  'Built for the future',
-]
-
 const STORY_STATS = [
   { value: 12, suffix: '+', label: 'Years in business' },
   { value: 150, suffix: '+', label: 'Clients served' },
@@ -35,10 +28,10 @@ const STORY_STATS = [
 ]
 
 const MILESTONES = [
-  { year: '2012', title: 'Founded' },
-  { year: '2016', title: 'Tech expansion' },
-  { year: '2020', title: 'National reach' },
-  { year: '2024', title: 'AI and scale' },
+  { year: '2010', title: 'Founded' },
+  { year: '2012', title: 'Expanded in Asia' },
+  { year: '2016', title: 'Expanded in USA' },
+  { year: '2024', title: 'Expanded in UAE' },
 ]
 
 const CORE_VALUES = [
@@ -48,6 +41,7 @@ const CORE_VALUES = [
     quote: 'We measure success by your outcomes.',
     back: 'Every project is scoped to clear KPIs and delivered on time.',
     gradient: 'from-indigo-500/20 to-cyan-500/20',
+    accent: '#818cf8',
   },
   {
     icon: FiZap,
@@ -55,6 +49,7 @@ const CORE_VALUES = [
     quote: 'Creativity is inventing, experimenting, growing.',
     back: 'We invest in technology and methods that keep you ahead.',
     gradient: 'from-violet-500/20 to-indigo-500/20',
+    accent: '#a78bfa',
   },
   {
     icon: FiUsers,
@@ -62,6 +57,7 @@ const CORE_VALUES = [
     quote: 'Your growth is our growth.',
     back: 'Long-term relationships built on trust and transparency.',
     gradient: 'from-cyan-500/20 to-teal-500/20',
+    accent: '#22d3ee',
   },
   {
     icon: FiAward,
@@ -69,6 +65,7 @@ const CORE_VALUES = [
     quote: 'Quality is never an accident.',
     back: 'Rigorous processes and a culture of continuous improvement.',
     gradient: 'from-pink-500/20 to-rose-500/20',
+    accent: '#f472b6',
   },
   {
     icon: FiHeart,
@@ -76,6 +73,7 @@ const CORE_VALUES = [
     quote: 'We do what we say we will.',
     back: 'Ethics and accountability in every engagement.',
     gradient: 'from-amber-500/20 to-orange-500/20',
+    accent: '#fb923c',
   },
 ]
 
@@ -119,21 +117,27 @@ const DIFFERENTIATORS = [
 ]
 
 const BRAND_CAROUSEL = [
-  'Acme Corp',
-  'Vertex Inc',
-  'Nova Labs',
-  'Meridian Group',
-  'Prime Group',
-  'Apex Solutions',
-  'Stellar Co',
-  'Horizon LLC',
-  'Summit Partners',
+  { name: 'North West Contractors', url: 'https://northwestcontractors.net/', logo: '/clients/north-west-contractors.png' },
+  { name: 'Artal Productions', url: 'https://pro.imdb.com/company/co0865001/', logo: '/clients/artal-productions.svg' },
+  { name: 'Invar Studios', url: 'https://www.invarstudios.global/mobile/', logo: '/clients/invar-studios.png' },
+  { name: 'Good Karma LA', url: 'https://www.thegoodkarmala.org/', logo: '/clients/good-karma-la.svg' },
+  { name: 'Muslim Network TV', url: 'https://www.muslimnetwork.tv/', logo: '/clients/muslim-network-tv.png' },
+  { name: 'Neo TV', url: 'https://en.neonews.pk/', logo: '/clients/neo-tv.png' },
+  { name: 'Digital Diraction', url: 'https://digitaldiraction.com/', logo: '/clients/digital-diraction.png' },
+  { name: 'Superior University', url: 'https://superior.ac.ae/', logo: '/clients/superior-university.png' },
+  { name: 'Naseeha Institute', url: 'https://naseeha.live/', logo: '/clients/naseeha-institute.png' },
+  { name: 'Voices of Muslims', url: 'https://voicesofmuslims.org/', logo: '/clients/voices-of-muslims.png' },
+  { name: 'ICNA Relief', url: 'https://icnarelief.org/', logo: '/clients/icna-relief.png' },
+  { name: 'Justice For All', url: 'https://www.justiceforall.org/', logo: '/clients/justice-for-all.png' },
 ]
 
 const TESTIMONIALS = [
-  { quote: 'TBG delivered our platform on time and exceeded our expectations on quality.', name: 'Sarah Chen', title: 'VP Product', company: 'TechFlow', rating: 5, image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
-  { quote: 'Their real estate team helped us secure and fit-out our HQ. Professional and responsive.', name: 'Marcus Webb', title: 'COO', company: 'Nova Labs', rating: 5, image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' },
-  { quote: 'From branding to video, the media team brought our vision to life.', name: 'Jamie Park', title: 'Marketing Director', company: 'Apex Solutions', rating: 5, image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' },
+  { quote: "TBG's production crew understood our vision from day one — every shoot came out polished and delivered right on schedule.", name: 'Malik Mujahid', company: 'Muslim Network TV' },
+  { quote: 'The media team at TBG brought real craftsmanship to our content. A smooth process from planning through to the final edit.', name: 'Mrs Koshy', company: 'Invar Studios' },
+  { quote: "Our promotional videos turned out better than we imagined. TBG's team was easy to work with and genuinely cared about the outcome.", name: 'Vishal', company: 'Good Karma LA' },
+  { quote: 'As a broadcaster, our bar for production quality is high. TBG met it every time, from concept to final cut.', name: 'Fawad Ahmed', company: 'Neo TV' },
+  { quote: "TBG's production work elevated every campaign we handed them. Sharp editing, great communication, delivered on time.", name: 'Hamza Rehman', company: 'Digital Diraction' },
+  { quote: 'TBG handled our campaign videos with real care for our mission. The final production was powerful and moving.', name: 'Saima Azfar', company: 'ICNA Relief' },
 ]
 
 const STORY_IMAGES = [
@@ -162,7 +166,7 @@ export function OurStorySection() {
             className="space-y-6"
           >
             <p className="section-label text-indigo-400">Our story</p>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white">Who we are</h2>
+            <h2 className="font-heading text-3xl lg:text-4xl font-bold text-white">Who we are</h2>
             <p className="text-white/80 leading-relaxed">
               TBG started with a simple idea: bring real estate, technology, and creative services under one roof so our clients get one trusted partner instead of many.
             </p>
@@ -177,7 +181,7 @@ export function OurStorySection() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] bg-white/5 relative">
+            <div className="rounded-xl overflow-hidden border border-indigo-400/25 shadow-[0_0_60px_-15px_rgba(99,102,241,0.5)] aspect-[4/3] bg-white/5 relative">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={imageIndex}
@@ -217,7 +221,7 @@ export function OurStorySection() {
           viewport={{ once: true }}
           className="mt-20"
         >
-          <h3 className="text-xl font-bold text-white mb-8">Milestones</h3>
+          <h3 className="font-heading text-xl font-bold text-white mb-8">Milestones</h3>
           <div className="flex flex-wrap gap-8 lg:gap-12 relative">
             {MILESTONES.map((m, i) => (
               <motion.div
@@ -257,7 +261,7 @@ export function CoreValuesSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl lg:text-4xl font-bold text-white text-center mb-4"
+          className="font-heading text-3xl lg:text-4xl font-bold text-white text-center mb-4"
         >
           Core values
         </motion.h2>
@@ -299,28 +303,29 @@ export function CoreValuesSection() {
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               >
                 <div
-                  className="absolute inset-0 backface-hidden rounded-2xl border border-white/10 p-6 flex flex-col bg-surface"
+                  className="absolute inset-0 backface-hidden rounded-xl border border-white/10 p-6 flex flex-col bg-surface"
                   style={{
                     background: `linear-gradient(135deg, rgba(99,102,241,0.15), rgba(34,211,238,0.08))`,
                     backfaceVisibility: 'hidden',
                     transform: 'rotateY(0deg)',
+                    borderTop: `2px solid ${v.accent}80`,
                   }}
                 >
-                  <div className={`rounded-xl p-3 bg-gradient-to-br ${v.gradient} w-fit`}>
+                  <div className={`rounded-lg p-3 bg-gradient-to-br ${v.gradient} w-fit`}>
                     <v.icon className="text-2xl text-white" />
                   </div>
-                  <h3 className="mt-4 text-lg font-bold text-white">{v.title}</h3>
+                  <h3 className="font-heading mt-4 text-lg font-bold text-white">{v.title}</h3>
                   <p className="mt-2 text-white/70 text-sm italic">&ldquo;{v.quote}&rdquo;</p>
                 </div>
                 <div
-                  className="absolute inset-0 rounded-2xl border border-white/10 p-6 flex flex-col justify-center bg-surface"
+                  className="absolute inset-0 rounded-xl border border-white/10 p-6 flex flex-col justify-center bg-surface"
                   style={{
                     background: `linear-gradient(135deg, rgba(99,102,241,0.2), rgba(34,211,238,0.1))`,
                     backfaceVisibility: 'hidden',
                     transform: 'rotateY(180deg)',
                   }}
                 >
-                  <h3 className="text-lg font-bold text-white">{v.title}</h3>
+                  <h3 className="font-heading text-lg font-bold text-white">{v.title}</h3>
                   <p className="mt-2 text-white/80 text-sm">{v.back}</p>
                 </div>
               </motion.div>
@@ -345,7 +350,7 @@ export function DifferentiatorsSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl lg:text-4xl font-bold text-white text-center mb-4"
+          className="font-heading text-3xl lg:text-4xl font-bold text-white text-center mb-4"
         >
           What makes us different
         </motion.h2>
@@ -365,7 +370,7 @@ export function DifferentiatorsSection() {
                 key={d.id}
                 type="button"
                 onClick={() => setActiveTab(i)}
-                className={`w-full flex items-center gap-4 p-4 rounded-xl text-left transition-colors ${
+                className={`w-full flex items-center gap-4 p-4 rounded-lg text-left transition-colors ${
                   activeTab === i ? 'bg-indigo-500/20 border border-indigo-400/30' : 'bg-white/5 border border-transparent hover:bg-white/10'
                 }`}
                 whileHover={{ x: 4 }}
@@ -431,21 +436,33 @@ export function LogosSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-2xl lg:text-3xl font-bold text-white text-center"
+          className="font-heading text-2xl lg:text-3xl font-bold text-white text-center"
         >
           Trusted by leading brands
         </motion.h2>
       </div>
-      <div className="relative z-10">
-        <div className="flex gap-10 animate-marquee whitespace-nowrap">
-          {[...BRAND_CAROUSEL, ...BRAND_CAROUSEL].map((entry, i) => (
-            <motion.div
-              key={`${entry}-${i}`}
-              className="inline-flex items-center justify-center min-w-[10rem] h-16 px-4 rounded-xl bg-white/5 border border-white/10 text-white/50 hover:text-cyan-400 hover:border-cyan-400/30 transition-colors cursor-default"
-              whileHover={{ scale: 1.02 }}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          {BRAND_CAROUSEL.map((entry, i) => (
+            <motion.a
+              key={entry.name}
+              href={entry.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={entry.name}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: (i % 8) * 0.06 }}
+              whileHover={{ scale: 1.04, y: -2 }}
+              className="flex items-center justify-center h-24 sm:h-28 px-5 rounded-xl bg-white shadow-lg shadow-black/20 border border-white/10 hover:border-cyan-400/60 hover:shadow-cyan-400/20 transition-colors"
             >
-              <span className="text-sm font-semibold">{entry}</span>
-            </motion.div>
+              {entry.logo ? (
+                <img src={entry.logo} alt={entry.name} className="max-h-16 sm:max-h-20 max-w-full object-contain" />
+              ) : (
+                <span className="text-sm font-semibold text-primary/80 text-center">{entry.name}</span>
+              )}
+            </motion.a>
           ))}
         </div>
       </div>
@@ -468,7 +485,7 @@ export function TestimonialsSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl lg:text-4xl font-bold text-white text-center mb-16"
+          className="font-heading text-3xl lg:text-4xl font-bold text-white text-center mb-16"
         >
           What clients say
         </motion.h2>
@@ -497,9 +514,11 @@ export function TestimonialsSection() {
               </div>
               <p className="text-xl text-white/90 italic">&ldquo;{TESTIMONIALS[index].quote}&rdquo;</p>
               <div className="mt-8 flex flex-col items-center gap-2">
-                <img src={TESTIMONIALS[index].image} alt="" className="w-14 h-14 rounded-full object-cover" />
-                <p className="font-bold text-white">{TESTIMONIALS[index].name}</p>
-                <p className="text-sm text-white/60">{TESTIMONIALS[index].title}, {TESTIMONIALS[index].company}</p>
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-400 flex items-center justify-center font-heading font-bold text-white text-lg">
+                  {TESTIMONIALS[index].name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase()}
+                </div>
+                <p className="font-heading font-bold text-white">{TESTIMONIALS[index].name}</p>
+                <p className="text-sm text-white/60">{TESTIMONIALS[index].company}</p>
               </div>
             </motion.div>
           </AnimatePresence>
@@ -543,18 +562,22 @@ export function AboutCTASection() {
                     c.action()
                   }
                 }}
-                className="block h-full p-8 rounded-2xl border border-white/10 bg-surface hover:border-indigo-400/30 hover:shadow-glow transition-all duration-300 group"
+                className={`block h-full p-8 rounded-xl border transition-all duration-300 group ${
+                  c.primary
+                    ? 'border-fuchsia-400/20 bg-surface hover:border-fuchsia-400/40 hover:shadow-glow-magenta'
+                    : 'border-white/10 bg-surface hover:border-indigo-400/30 hover:shadow-glow'
+                }`}
               >
-                <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${c.primary ? 'from-indigo-500/30 to-cyan-500/30' : 'from-white/10 to-white/5'} group-hover:scale-110 transition-transform`}>
+                <div className={`inline-flex p-3 rounded-lg bg-gradient-to-br ${c.primary ? 'from-purple-500/30 to-pink-500/30' : 'from-white/10 to-white/5'} group-hover:scale-110 transition-transform`}>
                   <c.icon className="text-2xl text-white" />
                 </div>
-                <h3 className="mt-4 text-xl font-bold text-white">{c.title}</h3>
+                <h3 className="font-heading mt-4 text-xl font-bold text-white">{c.title}</h3>
                 <p className="mt-2 text-white/70 text-sm">{c.desc}</p>
                 <motion.span
-                  className="inline-flex items-center gap-1 mt-4 text-cyan-400 font-medium text-sm"
+                  className={`inline-flex items-center gap-1 mt-4 font-medium text-sm ${c.primary ? 'text-gradient-magenta' : 'text-cyan-400'}`}
                   whileHover={{ x: 4 }}
                 >
-                  {c.primary ? 'Get in touch' : 'Learn more'} <FiChevronRight className="text-sm" />
+                  {c.primary ? 'Get in touch' : 'Learn more'} <FiChevronRight className={`text-sm ${c.primary ? 'text-fuchsia-400' : ''}`} />
                 </motion.span>
               </Link>
             </motion.div>

@@ -15,10 +15,10 @@ export default function ServicesMarquee({ className = '' }: { className?: string
   return (
     <div className={`overflow-hidden border-t border-white/10 bg-black/25 ${className}`}>
       <div className="flex w-max animate-marquee whitespace-nowrap py-4 md:py-5">
-        <span className="inline-block px-6 text-xs sm:text-sm font-semibold text-white/65 tracking-wide">
+        <span className="inline-block px-6 font-mono text-xs sm:text-sm font-medium text-white/65 tracking-wide">
           {repeated}
         </span>
-        <span className="inline-block px-6 text-xs sm:text-sm font-semibold text-white/65 tracking-wide" aria-hidden>
+        <span className="inline-block px-6 font-mono text-xs sm:text-sm font-medium text-white/65 tracking-wide" aria-hidden>
           {repeated}
         </span>
       </div>

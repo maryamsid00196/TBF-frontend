@@ -47,7 +47,7 @@ export default function Contact() {
               animate={{ opacity: 1, x: 0 }}
               className="card-glass p-8 space-y-6"
             >
-              <h2 className="text-2xl font-bold text-white">Get In Touch</h2>
+              <h2 className="font-heading text-2xl font-bold text-white">Get In Touch</h2>
               <div className="flex items-start gap-3 text-white/80">
                 <FiMapPin className="text-2xl text-cyan-400 flex-shrink-0 mt-1" />
                 <div>
@@ -71,7 +71,7 @@ export default function Contact() {
             <motion.div
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
-              className="rounded-2xl overflow-hidden ring-1 ring-white/10 aspect-video"
+              className="rounded-xl overflow-hidden ring-1 ring-cyan-400/25 shadow-[0_0_60px_-15px_rgba(34,211,238,0.45)] aspect-video"
             >
               <img
                 src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800"

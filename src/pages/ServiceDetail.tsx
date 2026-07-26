@@ -22,6 +22,7 @@ function SectionBlock({
   sectionClassName = 'bg-surface',
   backgroundSlot,
   graphicOnSide,
+  accent = '#818cf8',
 }: {
   id: string
   label: string
@@ -34,6 +35,7 @@ function SectionBlock({
   sectionClassName?: string
   backgroundSlot?: React.ReactNode
   graphicOnSide?: boolean
+  accent?: string
 }) {
   return (
     <section id={id} className={`relative py-16 lg:py-24 scroll-mt-24 overflow-hidden ${sectionClassName}`}>
@@ -42,16 +44,26 @@ function SectionBlock({
           className={`absolute top-0 bottom-0 pointer-events-none ${graphicOnSide ? 'right-0 w-1/2 lg:w-[45%]' : 'inset-0'}`}
           aria-hidden
         >
+          {graphicOnSide && (
+            <div
+              className="absolute left-0 top-0 bottom-0 w-px hidden lg:block"
+              style={{ background: `linear-gradient(to bottom, transparent, ${accent}66, transparent)` }}
+            />
+          )}
           {backgroundSlot}
         </div>
       )}
       <div
         className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${graphicOnSide ? 'lg:max-w-[55%] lg:mr-auto lg:pr-8' : ''}`}
       >
-        <motion.p {...SECTION_ANIMATION} className="section-label text-indigo-400/90 mb-2">
+        <motion.p
+          {...SECTION_ANIMATION}
+          className="section-label mb-2"
+          style={{ color: accent, background: `${accent}1a`, borderColor: `${accent}40` }}
+        >
           {label}
         </motion.p>
-        <motion.h2 {...SECTION_ANIMATION} className="text-3xl lg:text-4xl font-bold text-white mb-4">
+        <motion.h2 {...SECTION_ANIMATION} className="font-heading text-3xl lg:text-4xl font-bold text-white mb-4">
           {title}
         </motion.h2>
         <motion.p {...SECTION_ANIMATION} className="text-white/70 max-w-3xl text-lg mb-8">
@@ -60,7 +72,7 @@ function SectionBlock({
         <motion.ul {...SECTION_ANIMATION} className="grid sm:grid-cols-2 gap-3 mb-10">
           {features.map((f, i) => (
             <li key={i} className="flex items-center gap-2 text-white/80">
-              <span className="text-cyan-400">✓</span> {f}
+              <span style={{ color: accent }}>✓</span> {f}
             </li>
           ))}
         </motion.ul>
@@ -125,7 +137,7 @@ function WebBackground() {
       <div className="absolute inset-0 bg-primary/80" />
       <div className="absolute bottom-0 right-0 left-1/2 top-0 flex items-end justify-center pb-6 pr-4">
         <motion.div
-          className="w-full max-w-md h-52 rounded-t-2xl border-4 border-white/20 bg-surface/90 overflow-hidden"
+          className="w-full max-w-md h-52 rounded-t-xl border-4 border-white/20 bg-surface/90 overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -275,6 +287,7 @@ function SoftwareDevelopmentPage({ openModal }: { openModal: (i?: { service_inte
         openModal={openModal}
         backgroundSlot={<AIBackground />}
         graphicOnSide
+        accent="#a78bfa"
       />
       <SectionBlock
         id="web"
@@ -293,6 +306,7 @@ function SoftwareDevelopmentPage({ openModal }: { openModal: (i?: { service_inte
         sectionClassName="bg-primary"
         backgroundSlot={<WebBackground />}
         graphicOnSide
+        accent="#818cf8"
       />
       <SectionBlock
         id="mobile"
@@ -310,6 +324,7 @@ function SoftwareDevelopmentPage({ openModal }: { openModal: (i?: { service_inte
         openModal={openModal}
         backgroundSlot={<MobileBackground />}
         graphicOnSide
+        accent="#22d3ee"
       />
     </>
   )
@@ -332,6 +347,7 @@ function RealEstatePage({ openModal }: { openModal: (i?: { service_interest?: st
         ]}
         serviceInterest="Real Estate - Commercial"
         openModal={openModal}
+        accent="#818cf8"
       />
       <SectionBlock
         id="residential"
@@ -348,6 +364,7 @@ function RealEstatePage({ openModal }: { openModal: (i?: { service_interest?: st
         serviceInterest="Real Estate - Residential"
         openModal={openModal}
         sectionClassName="bg-primary"
+        accent="#22d3ee"
       />
       <SectionBlock
         id="advisory"
@@ -363,6 +380,7 @@ function RealEstatePage({ openModal }: { openModal: (i?: { service_interest?: st
         ]}
         serviceInterest="Real Estate - Advisory"
         openModal={openModal}
+        accent="#c084fc"
       />
     </>
   )
@@ -381,6 +399,7 @@ function MediaPage({ openModal }: { openModal: (i?: { service_interest?: string 
         openModal={openModal}
         backgroundSlot={<GraphicBackground />}
         graphicOnSide
+        accent="#f472b6"
       />
       <SectionBlock
         id="production"
@@ -398,6 +417,7 @@ function MediaPage({ openModal }: { openModal: (i?: { service_interest?: string 
         sectionClassName="bg-primary"
         backgroundSlot={<VideoBackground />}
         graphicOnSide
+        accent="#22d3ee"
       />
       <SectionBlock
         id="post-production"
@@ -415,6 +435,7 @@ function MediaPage({ openModal }: { openModal: (i?: { service_interest?: string 
         openModal={openModal}
         backgroundSlot={<VideoBackground />}
         graphicOnSide
+        accent="#c084fc"
       />
       <SectionBlock
         id="graphic-design"
@@ -432,6 +453,7 @@ function MediaPage({ openModal }: { openModal: (i?: { service_interest?: string 
         sectionClassName="bg-primary"
         backgroundSlot={<GraphicBackground />}
         graphicOnSide
+        accent="#818cf8"
       />
       <SectionBlock
         id="social-media"
@@ -448,6 +470,7 @@ function MediaPage({ openModal }: { openModal: (i?: { service_interest?: string 
         openModal={openModal}
         backgroundSlot={<GraphicBackground />}
         graphicOnSide
+        accent="#f472b6"
       />
     </>
   )

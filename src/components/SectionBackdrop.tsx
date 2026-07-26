@@ -22,8 +22,8 @@ export default function SectionBackdrop({ variant }: Props) {
       <div
         className={`absolute inset-0 ${
           isPrimary
-            ? 'bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(99,102,241,0.12),transparent),radial-gradient(ellipse_60%_40%_at_100%_50%,rgba(34,211,238,0.06),transparent)]'
-            : 'bg-[radial-gradient(ellipse_70%_45%_at_20%_0%,rgba(99,102,241,0.1),transparent),radial-gradient(ellipse_50%_35%_at_90%_80%,rgba(34,211,238,0.07),transparent)]'
+            ? 'bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(99,102,241,0.18),transparent),radial-gradient(ellipse_60%_40%_at_100%_50%,rgba(34,211,238,0.1),transparent)]'
+            : 'bg-[radial-gradient(ellipse_70%_45%_at_20%_0%,rgba(99,102,241,0.15),transparent),radial-gradient(ellipse_50%_35%_at_90%_80%,rgba(34,211,238,0.11),transparent)]'
         }`}
       />
 
@@ -70,13 +70,13 @@ export default function SectionBackdrop({ variant }: Props) {
       />
 
       <div
-        className={`absolute -right-[20%] top-1/2 -translate-y-1/2 w-[min(70vw,520px)] aspect-square rounded-full blur-[80px] ${
-          isPrimary ? 'bg-indigo-600/12' : 'bg-cyan-500/10'
+        className={`absolute -right-[20%] top-1/2 -translate-y-1/2 w-[min(70vw,560px)] aspect-square rounded-full blur-[80px] ${
+          isPrimary ? 'bg-indigo-600/18' : 'bg-cyan-500/15'
         }`}
       />
       <div
-        className={`absolute -left-[15%] bottom-0 w-[min(55vw,400px)] aspect-square rounded-full blur-[70px] ${
-          isPrimary ? 'bg-cyan-500/8' : 'bg-indigo-500/10'
+        className={`absolute -left-[15%] bottom-0 w-[min(55vw,440px)] aspect-square rounded-full blur-[70px] ${
+          isPrimary ? 'bg-cyan-500/13' : 'bg-indigo-500/15'
         }`}
       />
     </div>

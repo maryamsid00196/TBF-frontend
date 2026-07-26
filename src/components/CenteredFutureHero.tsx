@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView, useReducedMotion, AnimatePresence } from 'framer-motion'
 import { FiChevronRight } from 'react-icons/fi'
-import { HERO_TAGLINES } from './aboutSections'
+import { HERO_TAGLINES } from '../constants/hero'
 import HeroGraphicLayer from './HeroGraphicLayer'
 import HeroFloatingSquares from './HeroFloatingSquares'
 
@@ -32,7 +32,7 @@ export default function CenteredFutureHero() {
     return () => el.removeEventListener('mousemove', onMove)
   }, [reduced])
 
-  const headline = 'We build your future with you.'
+  const headline = 'We build your future.'
   const words = headline.split(' ')
 
   return (
@@ -115,7 +115,7 @@ export default function CenteredFutureHero() {
 
       <div className="relative z-10 max-w-3xl mx-auto py-6 sm:py-8 md:py-10">
         <motion.h1
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.08]"
+          className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.08]"
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
           variants={{
@@ -126,7 +126,9 @@ export default function CenteredFutureHero() {
           {words.map((word, i) => (
             <motion.span
               key={i}
-              className="inline-block mr-[0.22em] last:mr-0"
+              className={`inline-block mr-[0.22em] last:mr-0 ${
+                word.toLowerCase().replace(/[.,]/g, '') === 'future' ? 'text-gradient-brand' : ''
+              }`}
               variants={{
                 visible: { opacity: 1, y: 0 },
                 hidden: { opacity: 0, y: 22 },
@@ -170,7 +172,7 @@ export default function CenteredFutureHero() {
         >
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 btn-glow px-9 py-4 rounded-full text-white font-semibold text-base hover:scale-[1.02] active:scale-[0.98] transition-transform"
+            className="inline-flex items-center gap-2 btn-glow px-9 py-4 text-white font-semibold text-base hover:scale-[1.02] active:scale-[0.98] transition-transform"
           >
             Get in touch
             <FiChevronRight className="text-lg" aria-hidden />

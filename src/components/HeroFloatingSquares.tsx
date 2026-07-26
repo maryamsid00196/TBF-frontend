@@ -91,15 +91,15 @@ export default function HeroFloatingSquares({ mouse, reduced }: Props) {
                   animationDelay: s.delay,
                   opacity: reduced ? s.opacity * 0.35 : s.opacity,
                   boxShadow: reduced
-                    ? '0 0 24px rgba(59, 130, 246, 0.2)'
+                    ? '0 0 20px rgba(59, 130, 246, 0.16)'
                     : `
-                    0 0 20px rgba(59, 130, 246, 0.38),
-                    0 0 52px rgba(37, 99, 235, 0.3),
-                    0 0 100px rgba(99, 102, 241, 0.16),
-                    inset 0 0 1px rgba(147, 197, 253, 0.28)
+                    0 0 16px rgba(59, 130, 246, 0.32),
+                    0 0 40px rgba(37, 99, 235, 0.22),
+                    0 0 70px rgba(99, 102, 241, 0.1),
+                    inset 0 0 1px rgba(147, 197, 253, 0.3)
                   `,
                   background: 'rgba(8, 12, 22, 0.92)',
-                  border: '1px solid rgba(99, 102, 241, 0.24)',
+                  border: '1px solid rgba(99, 102, 241, 0.28)',
                 }}
               />
             </div>

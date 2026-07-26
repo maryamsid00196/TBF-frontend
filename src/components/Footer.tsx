@@ -31,7 +31,7 @@ export default function Footer() {
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-white mb-4 tracking-wide">Quick Links</h3>
+            <h3 className="font-heading font-semibold text-white mb-4 tracking-wide">Quick Links</h3>
             <ul className="space-y-2">
               {quickLinks.map(({ label, path }) => (
                 <li key={path}>
@@ -43,7 +43,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold text-white mb-4 tracking-wide">Contact</h3>
+            <h3 className="font-heading font-semibold text-white mb-4 tracking-wide">Contact</h3>
             <ul className="space-y-3 text-sm text-white/70">
               <li className="flex items-center gap-2">
                 <FiMapPin className="text-cyan-400 flex-shrink-0" aria-hidden /> {CONTACT_ADDRESS}
@@ -51,21 +51,21 @@ export default function Footer() {
               <li className="flex items-center gap-2">
                 <FiPhone className="text-cyan-400 flex-shrink-0" aria-hidden /> {CONTACT_PHONE_DISPLAY}
               </li>
-              <li className="flex gap-4 mt-2">
-                <a href="#" className="hover:text-cyan-400 transition" aria-label="LinkedIn">
-                  <FaLinkedinIn size={20} />
+              <li className="flex gap-3 mt-2">
+                <a href="#" className="p-2 rounded-full border border-white/10 bg-white/5 hover:border-cyan-400/40 hover:text-cyan-300 hover:bg-white/[0.08] transition-colors" aria-label="LinkedIn">
+                  <FaLinkedinIn size={16} />
                 </a>
-                <a href="#" className="hover:text-cyan-400 transition" aria-label="Twitter">
-                  <FaTwitter size={20} />
+                <a href="#" className="p-2 rounded-full border border-white/10 bg-white/5 hover:border-cyan-400/40 hover:text-cyan-300 hover:bg-white/[0.08] transition-colors" aria-label="Twitter">
+                  <FaTwitter size={16} />
                 </a>
-                <a href="#" className="hover:text-cyan-400 transition" aria-label="Facebook">
-                  <FaFacebookF size={20} />
+                <a href="#" className="p-2 rounded-full border border-white/10 bg-white/5 hover:border-cyan-400/40 hover:text-cyan-300 hover:bg-white/[0.08] transition-colors" aria-label="Facebook">
+                  <FaFacebookF size={16} />
                 </a>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold text-white mb-4 tracking-wide">Work With Us</h3>
+            <h3 className="font-heading font-semibold text-white mb-4 tracking-wide">Work With Us</h3>
             <p className="text-white/70 text-sm mb-4">
               Get in touch for a consultation or to request a service.
             </p>
@@ -80,7 +80,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="text-sm text-white/60 text-center md:text-right">
+          <div className="font-mono text-xs text-white/50 tracking-wide text-center md:text-right">
             © {new Date().getFullYear()} TBG Time Business Group. Terms, Privacy, Careers
           </div>
         </div>
