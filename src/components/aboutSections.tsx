@@ -118,7 +118,9 @@ const DIFFERENTIATORS = [
 
 const BRAND_CAROUSEL = [
   { name: 'North West Contractors', url: 'https://northwestcontractors.net/', logo: '/clients/north-west-contractors.png' },
+  { name: 'ICNA Relief', url: 'https://icnarelief.org/', logo: '/clients/icna-relief.png' },
   { name: 'Artal Productions', url: 'https://pro.imdb.com/company/co0865001/', logo: '/clients/artal-productions.svg' },
+  { name: 'Justice For All', url: 'https://www.justiceforall.org/', logo: '/clients/justice-for-all.png' },
   { name: 'Invar Studios', url: 'https://www.invarstudios.global/mobile/', logo: '/clients/invar-studios.png' },
   { name: 'Good Karma LA', url: 'https://www.thegoodkarmala.org/', logo: '/clients/good-karma-la.svg' },
   { name: 'Muslim Network TV', url: 'https://www.muslimnetwork.tv/', logo: '/clients/muslim-network-tv.png' },
@@ -127,8 +129,6 @@ const BRAND_CAROUSEL = [
   { name: 'Superior University', url: 'https://superior.ac.ae/', logo: '/clients/superior-university.png' },
   { name: 'Naseeha Institute', url: 'https://naseeha.live/', logo: '/clients/naseeha-institute.png' },
   { name: 'Voices of Muslims', url: 'https://voicesofmuslims.org/', logo: '/clients/voices-of-muslims.png' },
-  { name: 'ICNA Relief', url: 'https://icnarelief.org/', logo: '/clients/icna-relief.png' },
-  { name: 'Justice For All', url: 'https://www.justiceforall.org/', logo: '/clients/justice-for-all.png' },
 ]
 
 const TESTIMONIALS = [
@@ -441,28 +441,23 @@ export function LogosSection() {
           Trusted by leading brands
         </motion.h2>
       </div>
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {BRAND_CAROUSEL.map((entry, i) => (
-            <motion.a
-              key={entry.name}
+      <div className="relative z-10 marquee-pause-on-hover">
+        <div className="flex gap-4 animate-marquee-brands whitespace-nowrap">
+          {[...BRAND_CAROUSEL, ...BRAND_CAROUSEL].map((entry, i) => (
+            <a
+              key={`${entry.name}-${i}`}
               href={entry.url}
               target="_blank"
               rel="noopener noreferrer"
               title={entry.name}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: (i % 8) * 0.06 }}
-              whileHover={{ scale: 1.04, y: -2 }}
-              className="flex items-center justify-center h-24 sm:h-28 px-5 rounded-xl bg-white shadow-lg shadow-black/20 border border-white/10 hover:border-cyan-400/60 hover:shadow-cyan-400/20 transition-colors"
+              className="inline-flex flex-shrink-0 items-center justify-center h-16 sm:h-20 min-w-[9rem] px-3 rounded-lg bg-white shadow-md shadow-black/20 border border-white/10 hover:border-cyan-400/60 hover:shadow-cyan-400/20 hover:scale-[1.04] transition-all"
             >
               {entry.logo ? (
-                <img src={entry.logo} alt={entry.name} className="max-h-16 sm:max-h-20 max-w-full object-contain" />
+                <img src={entry.logo} alt={entry.name} className="max-h-10 sm:max-h-12 max-w-[7.5rem] object-contain" />
               ) : (
-                <span className="text-sm font-semibold text-primary/80 text-center">{entry.name}</span>
+                <span className="text-[11px] sm:text-xs font-semibold text-primary/80 text-center leading-tight">{entry.name}</span>
               )}
-            </motion.a>
+            </a>
           ))}
         </div>
       </div>

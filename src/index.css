@@ -216,6 +216,12 @@ body {
 .animate-marquee {
   animation: marquee 30s linear infinite;
 }
+.animate-marquee-brands {
+  animation: marquee 22s linear infinite;
+}
+.marquee-pause-on-hover:hover .animate-marquee-brands {
+  animation-play-state: paused;
+}
 
 /* Hero: floating glowing squares (diamonds) */
 .hero-glow-square {
@@ -295,7 +301,8 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
+  .animate-marquee,
+  .animate-marquee-brands {
     animation: none;
   }
   .hero-glow-square--a,
