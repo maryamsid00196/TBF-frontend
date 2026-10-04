@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FiPhone, FiMapPin } from 'react-icons/fi'
-import { FaLinkedinIn, FaTwitter, FaFacebookF } from 'react-icons/fa'
+import { FaLinkedinIn, FaTwitter, FaFacebookF, FaInstagram } from 'react-icons/fa'
 import { useContactModal } from '../context/ContactModalContext'
 import { CONTACT_ADDRESS, CONTACT_PHONE_DISPLAY } from '../constants/contact'
 
@@ -60,6 +60,9 @@ export default function Footer() {
                 </a>
                 <a href="#" className="p-2 rounded-full border border-white/10 bg-white/5 hover:border-cyan-400/40 hover:text-cyan-300 hover:bg-white/[0.08] transition-colors" aria-label="Facebook">
                   <FaFacebookF size={16} />
+                </a>
+                <a href="https://www.instagram.com/timebusinessgroup?stkn=N3J6MWxqbzFra3Qw" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full border border-white/10 bg-white/5 hover:border-cyan-400/40 hover:text-cyan-300 hover:bg-white/[0.08] transition-colors" aria-label="Instagram">
+                  <FaInstagram size={16} />
                 </a>
               </li>
             </ul>

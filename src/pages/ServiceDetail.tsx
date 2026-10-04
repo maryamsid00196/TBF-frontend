@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useContactModal } from '../context/ContactModalContext'
+import MediaPortfolio from '../components/MediaPortfolio'
 import { FiCpu, FiMonitor, FiSmartphone, FiImage, FiVideo, FiLayers, FiFilm } from 'react-icons/fi'
 
 const SECTION_ANIMATION = {
@@ -389,6 +390,7 @@ function RealEstatePage({ openModal }: { openModal: (i?: { service_interest?: st
 function MediaPage({ openModal }: { openModal: (i?: { service_interest?: string }) => void }) {
   return (
     <>
+      <MediaPortfolio />
       <SectionBlock
         id="pre-production"
         label="Pre-production"

@@ -21,7 +21,7 @@ import Counter, { useCounterInView } from './Counter'
 import SectionBackdrop from './SectionBackdrop'
 
 const STORY_STATS = [
-  { value: 12, suffix: '+', label: 'Years in business' },
+  { value: 15, suffix: '+', label: 'Years in business' },
   { value: 150, suffix: '+', label: 'Clients served' },
   { value: 50, suffix: '+', label: 'Team members' },
   { value: 200, suffix: '+', label: 'Projects delivered' },
@@ -283,7 +283,7 @@ export function CoreValuesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.05 * i }}
-              className="h-[280px]"
+              className="h-[190px]"
               style={{ perspective: 1000 }}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}

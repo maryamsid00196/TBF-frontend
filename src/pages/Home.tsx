@@ -131,7 +131,11 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionShapeBridge shape="ripple" tone="surface-surface" />
+      <SectionShapeBridge shape="steps" tone="surface-primary" />
+
+      <LogosSection />
+
+      <SectionShapeBridge shape="slope" tone="primary-surface" />
 
       <OurStorySection />
 
@@ -143,11 +147,7 @@ export default function Home() {
 
       <DifferentiatorsSection />
 
-      <SectionShapeBridge shape="steps" tone="surface-primary" />
-
-      <LogosSection />
-
-      <SectionShapeBridge shape="slope" tone="primary-surface" />
+      <SectionShapeBridge shape="ripple" tone="surface-surface" />
 
       <TestimonialsSection />
 
