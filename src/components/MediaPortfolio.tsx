@@ -10,16 +10,15 @@ type PortfolioItem = {
 }
 
 const VERTICAL = 9 / 16
-const LANDSCAPE = 16 / 9
 
 const PORTFOLIO: PortfolioItem[] = [
   { slug: 'power-horse-car-chase', title: 'Power Horse: Car Chase', aspect: VERTICAL },
   { slug: 'sherra-dubai-scifi', title: 'SHERRA Dubai', aspect: VERTICAL },
-  { slug: 'apostle-of-the-east', title: 'Apostle of the East', aspect: LANDSCAPE },
+  { slug: 'kenzie-pistachio-cgi', title: 'KENZIE Pistachio', aspect: VERTICAL },
   { slug: 'brands-for-less', title: 'Brands For Less', aspect: VERTICAL },
   { slug: 'power-horse-machine', title: 'Power Horse: Machine Power', aspect: VERTICAL },
-  { slug: 'university-arabic', title: 'University Campaign', aspect: VERTICAL },
-  { slug: 'business-setup', title: 'Business Setup', aspect: VERTICAL },
+  { slug: 'hind-tahnoun', title: 'Hind Tahnoun', aspect: VERTICAL },
+  { slug: 'laundry-business', title: 'Laundry Business', aspect: VERTICAL },
   { slug: 'real-estate', title: 'Real Estate', aspect: VERTICAL },
 ]
 

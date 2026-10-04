@@ -17,7 +17,6 @@ const menuItems = [
     path: '/#story',
     children: [
       { label: 'Our Story', path: '/#story' },
-      { label: 'Core Values', path: '/#values' },
       { label: 'What Makes Us Different', path: '/#different' },
     ],
   },

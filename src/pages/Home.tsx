@@ -9,7 +9,6 @@ import SectionTransitionDivider, {
 import SectionBackdrop from '../components/SectionBackdrop'
 import {
   OurStorySection,
-  CoreValuesSection,
   DifferentiatorsSection,
   LogosSection,
   TestimonialsSection,
@@ -139,11 +138,7 @@ export default function Home() {
 
       <OurStorySection />
 
-      <SectionShapeBridge shape="ridge" tone="surface-primary" />
-
-      <CoreValuesSection />
-
-      <SectionShapeBridge shape="bowl" tone="primary-surface" />
+      <SectionShapeBridge shape="ridge" tone="surface-surface" />
 
       <DifferentiatorsSection />
 

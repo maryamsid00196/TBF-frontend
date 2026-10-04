@@ -15,7 +15,9 @@ import {
   FiBriefcase,
   FiUserPlus,
   FiLink2,
+  FiShield,
 } from 'react-icons/fi'
+import type { IconType } from 'react-icons'
 import { useContactModal } from '../context/ContactModalContext'
 import Counter, { useCounterInView } from './Counter'
 import SectionBackdrop from './SectionBackdrop'
@@ -34,50 +36,56 @@ const MILESTONES = [
   { year: '2024', title: 'Expanded in UAE' },
 ]
 
-const CORE_VALUES = [
+type DifferentiatorTab = {
+  id: string
+  icon: IconType
+  title: string
+  content: string
+  quote?: string
+  metric?: string
+  metricLabel?: string
+  progress?: number
+}
+
+const CORE_VALUES: DifferentiatorTab[] = [
   {
+    id: 'results',
     icon: FiTarget,
     title: 'Results driven',
     quote: 'We measure success by your outcomes.',
-    back: 'Every project is scoped to clear KPIs and delivered on time.',
-    gradient: 'from-indigo-500/20 to-cyan-500/20',
-    accent: '#818cf8',
+    content: 'Every project is scoped to clear KPIs and delivered on time.',
   },
   {
+    id: 'innovation',
     icon: FiZap,
     title: 'Innovation first',
     quote: 'Creativity is inventing, experimenting, growing.',
-    back: 'We invest in technology and methods that keep you ahead.',
-    gradient: 'from-violet-500/20 to-indigo-500/20',
-    accent: '#a78bfa',
+    content: 'We invest in technology and methods that keep you ahead.',
   },
   {
+    id: 'partnership',
     icon: FiUsers,
     title: 'Client partnership',
     quote: 'Your growth is our growth.',
-    back: 'Long-term relationships built on trust and transparency.',
-    gradient: 'from-cyan-500/20 to-teal-500/20',
-    accent: '#22d3ee',
+    content: 'Long-term relationships built on trust and transparency.',
   },
   {
+    id: 'excellence',
     icon: FiAward,
     title: 'Excellence always',
     quote: 'Quality is never an accident.',
-    back: 'Rigorous processes and a culture of continuous improvement.',
-    gradient: 'from-pink-500/20 to-rose-500/20',
-    accent: '#f472b6',
+    content: 'Rigorous processes and a culture of continuous improvement.',
   },
   {
-    icon: FiHeart,
+    id: 'integrity',
+    icon: FiShield,
     title: 'Integrity',
     quote: 'We do what we say we will.',
-    back: 'Ethics and accountability in every engagement.',
-    gradient: 'from-amber-500/20 to-orange-500/20',
-    accent: '#fb923c',
+    content: 'Ethics and accountability in every engagement.',
   },
 ]
 
-const DIFFERENTIATORS = [
+const DIFFERENTIATORS: DifferentiatorTab[] = [
   {
     id: 'integrated',
     icon: FiBriefcase,
@@ -249,98 +257,19 @@ export function OurStorySection() {
   )
 }
 
-export function CoreValuesSection() {
-  const [hovered, setHovered] = useState<number | null>(null)
-  const [mouse, setMouse] = useState({ x: 0, y: 0 })
+const DIFFERENTIATOR_GROUPS = [
+  { heading: 'What sets us apart', items: DIFFERENTIATORS },
+  { heading: 'Our core values', items: CORE_VALUES },
+]
 
-  return (
-    <section id="values" className="relative overflow-hidden py-20 lg:py-28 bg-primary scroll-mt-24">
-      <SectionBackdrop variant="primary" />
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="font-heading text-3xl lg:text-4xl font-bold text-white text-center mb-4"
-        >
-          Core values
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-white/70 text-center max-w-2xl mx-auto mb-16"
-        >
-          What we stand for and how we work with you.
-        </motion.p>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-          {CORE_VALUES.map((v, i) => (
-            <motion.div
-              key={v.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.05 * i }}
-              className="h-[190px]"
-              style={{ perspective: 1000 }}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
-              onMouseMove={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect()
-                setMouse({ x: (e.clientX - rect.left) / rect.width - 0.5, y: (e.clientY - rect.top) / rect.height - 0.5 })
-              }}
-            >
-              <motion.div
-                className="relative w-full h-full preserve-3d"
-                style={{ transformStyle: 'preserve-3d' }}
-                animate={{
-                  rotateY: hovered === i ? 180 : 0,
-                  rotateX: hovered === i ? mouse.y * 8 : 0,
-                  rotateZ: hovered === i ? mouse.x * -6 : 0,
-                }}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              >
-                <div
-                  className="absolute inset-0 backface-hidden rounded-xl border border-white/10 p-6 flex flex-col bg-surface"
-                  style={{
-                    background: `linear-gradient(135deg, rgba(99,102,241,0.15), rgba(34,211,238,0.08))`,
-                    backfaceVisibility: 'hidden',
-                    transform: 'rotateY(0deg)',
-                    borderTop: `2px solid ${v.accent}80`,
-                  }}
-                >
-                  <div className={`rounded-lg p-3 bg-gradient-to-br ${v.gradient} w-fit`}>
-                    <v.icon className="text-2xl text-white" />
-                  </div>
-                  <h3 className="font-heading mt-4 text-lg font-bold text-white">{v.title}</h3>
-                  <p className="mt-2 text-white/70 text-sm italic">&ldquo;{v.quote}&rdquo;</p>
-                </div>
-                <div
-                  className="absolute inset-0 rounded-xl border border-white/10 p-6 flex flex-col justify-center bg-surface"
-                  style={{
-                    background: `linear-gradient(135deg, rgba(99,102,241,0.2), rgba(34,211,238,0.1))`,
-                    backfaceVisibility: 'hidden',
-                    transform: 'rotateY(180deg)',
-                  }}
-                >
-                  <h3 className="font-heading text-lg font-bold text-white">{v.title}</h3>
-                  <p className="mt-2 text-white/80 text-sm">{v.back}</p>
-                </div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
+const ALL_TABS = DIFFERENTIATOR_GROUPS.flatMap((g) => g.items)
 
 export function DifferentiatorsSection() {
   const [activeTab, setActiveTab] = useState(0)
   const ref = useRef(null)
   const inView = useInView(ref, { once: true })
+  const active = ALL_TABS[activeTab]
+  const isValue = CORE_VALUES.includes(active)
 
   return (
     <section id="different" className="relative overflow-hidden py-20 lg:py-28 bg-surface scroll-mt-24">
@@ -360,67 +289,86 @@ export function DifferentiatorsSection() {
           viewport={{ once: true }}
           className="text-white/70 text-center max-w-2xl mx-auto mb-12"
         >
-          Integrated services, technology, and support built around you.
+          Integrated services, technology, and the values that guide how we work with you.
         </motion.p>
 
         <div ref={ref} className="grid lg:grid-cols-2 gap-12 items-start">
-          <div className="space-y-2">
-            {DIFFERENTIATORS.map((d, i) => (
-              <motion.button
-                key={d.id}
-                type="button"
-                onClick={() => setActiveTab(i)}
-                className={`w-full flex items-center gap-4 p-4 rounded-lg text-left transition-colors ${
-                  activeTab === i ? 'bg-indigo-500/20 border border-indigo-400/30' : 'bg-white/5 border border-transparent hover:bg-white/10'
-                }`}
-                whileHover={{ x: 4 }}
-                whileTap={{ scale: 0.99 }}
-              >
-                <d.icon className={`text-2xl shrink-0 ${activeTab === i ? 'text-indigo-400' : 'text-white/60'}`} />
-                <span className="font-semibold text-white">{d.title}</span>
-              </motion.button>
+          <div className="space-y-6">
+            {DIFFERENTIATOR_GROUPS.map((group) => (
+              <div key={group.heading}>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-white/50">{group.heading}</p>
+                <div className="space-y-2">
+                  {group.items.map((d) => {
+                    const i = ALL_TABS.indexOf(d)
+                    return (
+                      <motion.button
+                        key={d.id}
+                        type="button"
+                        onClick={() => setActiveTab(i)}
+                        className={`w-full flex items-center gap-4 p-4 rounded-lg text-left transition-colors ${
+                          activeTab === i ? 'bg-indigo-500/20 border border-indigo-400/30' : 'bg-white/5 border border-transparent hover:bg-white/10'
+                        }`}
+                        whileHover={{ x: 4 }}
+                        whileTap={{ scale: 0.99 }}
+                      >
+                        <d.icon className={`text-2xl shrink-0 ${activeTab === i ? 'text-indigo-400' : 'text-white/60'}`} />
+                        <span className="font-semibold text-white">{d.title}</span>
+                      </motion.button>
+                    )
+                  })}
+                </div>
+              </div>
             ))}
           </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -24 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-6"
-            >
-              <div>
-                <p className="text-white/80 leading-relaxed">{DIFFERENTIATORS[activeTab].content}</p>
-                <div className="mt-4 flex items-baseline gap-2">
-                  <span className="text-3xl font-bold text-cyan-400">{DIFFERENTIATORS[activeTab].metric}</span>
-                  <span className="text-white/60">{DIFFERENTIATORS[activeTab].metricLabel}</span>
+          <div className="lg:sticky lg:top-28">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, x: 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -24 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-6"
+              >
+                <div>
+                  {active.quote && (
+                    <p className="mb-3 text-xl text-white italic">&ldquo;{active.quote}&rdquo;</p>
+                  )}
+                  <p className="text-white/80 leading-relaxed">{active.content}</p>
+                  {active.metric && (
+                    <div className="mt-4 flex items-baseline gap-2">
+                      <span className="text-3xl font-bold text-cyan-400">{active.metric}</span>
+                      <span className="text-white/60">{active.metricLabel}</span>
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div className="flex items-center gap-2 text-emerald-400">
-                <motion.span
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={inView ? { scale: 1, opacity: 1 } : {}}
-                  transition={{ delay: 0.2, type: 'spring', stiffness: 400 }}
-                >
-                  <FiCheck className="w-6 h-6" strokeWidth={2.5} />
-                </motion.span>
-                <span className="text-sm font-medium">Key differentiator</span>
-              </div>
-              <div>
-                <div className="h-2 rounded-full bg-white/10 overflow-hidden">
-                  <motion.div
-                    className="h-full rounded-full bg-gradient-accent"
-                    initial={{ width: 0 }}
-                    animate={inView ? { width: `${DIFFERENTIATORS[activeTab].progress}%` } : {}}
-                    transition={{ duration: 1, delay: 0.3 }}
-                  />
+                <div className="flex items-center gap-2 text-emerald-400">
+                  <motion.span
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={inView ? { scale: 1, opacity: 1 } : {}}
+                    transition={{ delay: 0.2, type: 'spring', stiffness: 400 }}
+                  >
+                    <FiCheck className="w-6 h-6" strokeWidth={2.5} />
+                  </motion.span>
+                  <span className="text-sm font-medium">{isValue ? 'Core value' : 'Key differentiator'}</span>
                 </div>
-                <p className="mt-1 text-white/50 text-xs">Capability level</p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+                {active.progress !== undefined && (
+                  <div>
+                    <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+                      <motion.div
+                        className="h-full rounded-full bg-gradient-accent"
+                        initial={{ width: 0 }}
+                        animate={inView ? { width: `${active.progress}%` } : {}}
+                        transition={{ duration: 1, delay: 0.3 }}
+                      />
+                    </div>
+                    <p className="mt-1 text-white/50 text-xs">Capability level</p>
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>
