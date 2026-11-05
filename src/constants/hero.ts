@@ -1,5 +1,5 @@
 export const HERO_TAGLINES = [
-  'Real Estate, Software, Media',
+  'Software, AI and Media',
   'Innovation meets execution',
   'Partner for growth',
   'Built for the future',

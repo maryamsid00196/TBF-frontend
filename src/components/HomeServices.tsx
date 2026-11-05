@@ -7,34 +7,6 @@ import { PORTFOLIO, src } from './MediaPortfolio'
 
 /* ---------- mini visuals ---------- */
 
-function SkylineVisual() {
-  const bars = [38, 62, 46, 84, 56, 72, 40, 94, 60, 50, 76, 44]
-  return (
-    <div className="relative h-full w-full flex items-end gap-1.5 px-5 pb-5">
-      {bars.map((h, i) => (
-        <motion.div
-          key={i}
-          className="flex-1 rounded-t-md bg-gradient-to-t from-indigo-500/25 to-indigo-300/70 relative overflow-hidden"
-          initial={{ height: 0 }}
-          whileInView={{ height: `${h}%` }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div
-            className="absolute inset-0 opacity-60"
-            style={{
-              backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1.5px)',
-              backgroundSize: '6px 9px',
-              backgroundPosition: '2px 4px',
-            }}
-          />
-        </motion.div>
-      ))}
-      <div className="absolute inset-x-5 bottom-5 h-px bg-indigo-300/50" />
-    </div>
-  )
-}
-
 function CodeVisual() {
   const reduce = useReducedMotion()
   const lines = [
@@ -118,18 +90,8 @@ type Service = {
 
 export const SERVICES: Service[] = [
   {
-    icon: FiHome,
-    index: '01',
-    name: 'Real Estate',
-    slug: 'real-estate',
-    pitch: 'Commercial, residential and advisory, from acquisition to portfolio growth.',
-    tags: ['Commercial', 'Residential', 'Advisory'],
-    visual: <SkylineVisual />,
-    accent: '#818cf8',
-  },
-  {
     icon: FiCode,
-    index: '02',
+    index: '01',
     name: 'Software & AI',
     slug: 'software-development',
     pitch: 'AI pipelines, web and mobile apps that run your operations on autopilot.',
@@ -139,7 +101,7 @@ export const SERVICES: Service[] = [
   },
   {
     icon: FiVideo,
-    index: '03',
+    index: '02',
     name: 'Media',
     slug: 'media',
     pitch: 'Commercials, CGI, AI video and social content, shot and edited in-house.',
@@ -255,7 +217,7 @@ export default function HomeServices() {
               viewport={{ once: true }}
               className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.05]"
             >
-              Three divisions. <span className="text-gradient-brand">One partner.</span>
+              Tech and creative. <span className="text-gradient-brand">One partner.</span>
             </motion.h2>
           </div>
           <motion.div
@@ -265,7 +227,7 @@ export default function HomeServices() {
             className="flex flex-col items-start lg:items-end gap-4"
           >
             <p className="text-white/60 max-w-sm lg:text-right">
-              Each service stands on its own. Together they cover everything from the property to the platform to the post.
+              Each service stands on its own. Together they cover everything from the platform to the pipeline to the post.
             </p>
             <Link to="/services" className="text-sm font-semibold text-cyan-300 hover:text-cyan-200">
               View all services →
@@ -273,7 +235,7 @@ export default function HomeServices() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {SERVICES.map((s, i) => (
             <ServiceCard key={s.slug} s={s} i={i} />
           ))}

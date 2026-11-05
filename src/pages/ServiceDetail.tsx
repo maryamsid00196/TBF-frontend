@@ -32,65 +32,6 @@ type ServiceContent = {
 }
 
 const CONTENT: Record<string, ServiceContent> = {
-  'real-estate': {
-    name: 'Real Estate',
-    label: 'Real Estate',
-    title: 'Property decisions,',
-    highlight: 'made with confidence.',
-    description:
-      'Commercial, residential and investment real estate across the UAE. We find, negotiate, manage and advise, so every move is backed by data and local expertise.',
-    accent: '#818cf8',
-    stats: [
-      ['3', 'practice areas'],
-      ['UAE', 'wide coverage'],
-      ['1', 'advisor, start to finish'],
-    ],
-    cta: 'Looking to buy, lease or invest?',
-    blocks: [
-      {
-        id: 'commercial',
-        label: 'Commercial',
-        title: 'Commercial Real Estate',
-        description: "Offices, retail and industrial space that fits how your business works today, and where it's heading.",
-        features: [
-          { title: 'Acquisition & due diligence', text: 'Shortlists, site visits, title checks and full financial due diligence before you commit.' },
-          { title: 'Leasing & negotiation', text: 'Market-backed terms, fit-out allowances and lease structures that protect you.' },
-          { title: 'Asset & portfolio management', text: 'Tenant relations, rent collection and maintenance handled end to end.' },
-          { title: 'Valuation & market analysis', text: 'Independent pricing, comparables and yield analysis behind every decision.' },
-        ],
-        idealFor: 'Growing companies, retailers and investors with commercial portfolios.',
-        serviceInterest: 'Real Estate - Commercial',
-      },
-      {
-        id: 'residential',
-        label: 'Residential',
-        title: 'Residential Real Estate',
-        description: 'Buying, selling or renting a home in the UAE, with one advisor from the first viewing to handover.',
-        features: [
-          { title: 'Buyer representation', text: "We search, shortlist and negotiate on your side, not the seller's." },
-          { title: 'Sales & marketing', text: 'Professional photography, video tours and targeted listings produced by our media team.' },
-          { title: 'Off-plan & new launches', text: 'Access to new developments, payment plans and developer due diligence.' },
-          { title: 'Relocation support', text: 'Area guides, school and commute advice, and settling-in help for new arrivals.' },
-        ],
-        idealFor: 'Families, professionals relocating to Dubai and first-time buyers.',
-        serviceInterest: 'Real Estate - Residential',
-      },
-      {
-        id: 'advisory',
-        label: 'Advisory',
-        title: 'Investment & Advisory',
-        description: 'Strategy for investors who want returns, not guesswork.',
-        features: [
-          { title: 'Market research', text: 'Area-level trends, supply pipelines and price outlooks.' },
-          { title: 'Investment strategy', text: 'Portfolio plans matched to your budget, risk appetite and timeline.' },
-          { title: 'Feasibility & risk', text: 'Development appraisals, scenario modelling and exit planning.' },
-          { title: 'Regulation & compliance', text: 'Guidance on ownership rules, fees, registrations and residency options.' },
-        ],
-        idealFor: 'Individual investors, family offices and developers.',
-        serviceInterest: 'Real Estate - Advisory',
-      },
-    ],
-  },
   'software-development': {
     name: 'Software & AI',
     label: 'Software & AI',
@@ -342,6 +283,9 @@ export default function ServiceDetail() {
 
   if (slug === 'content-creation') {
     return <Navigate to="/services/media" replace />
+  }
+  if (slug === 'real-estate') {
+    return <Navigate to="/services" replace />
   }
 
   const c = slug ? CONTENT[slug] : null

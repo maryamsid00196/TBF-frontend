@@ -8,7 +8,6 @@ const columns = [
   {
     title: 'Services',
     links: [
-      { label: 'Real Estate', path: '/services/real-estate' },
       { label: 'Software & AI', path: '/services/software-development' },
       { label: 'Media', path: '/services/media' },
       { label: 'AI Pipelines', path: '/services/software-development#ai' },
@@ -40,7 +39,7 @@ export default function Footer() {
               <span className="font-heading text-lg font-semibold">Time Business Group</span>
             </Link>
             <p className="mt-4 max-w-sm text-sm text-white/60 leading-relaxed">
-              Real estate, software and media under one roof. We build brands, spaces and software, end to end.
+              Software, AI and media under one roof. We build platforms, pipelines and content, end to end.
             </p>
             <button
               type="button"

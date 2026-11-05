@@ -31,7 +31,7 @@ export default function Contact() {
         label="Get In Touch"
         title="Let's talk about"
         highlight="what's next."
-        description="Whether it's a property, a platform or a production, tell us what you're planning and we'll show you how we can help."
+        description="Whether it's a website, an AI pipeline or a production, tell us what you're planning and we'll show you how we can help."
         crumbs={[{ label: 'Contact' }]}
       >
         <button

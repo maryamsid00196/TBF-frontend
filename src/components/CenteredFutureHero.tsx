@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView, useReducedMotion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { FiChevronRight, FiHome, FiCode, FiVideo, FiPlay } from 'react-icons/fi'
+import { FiChevronRight, FiCode, FiVideo, FiPlay } from 'react-icons/fi'
 import { HERO_TAGLINES } from '../constants/hero'
 import HeroFloatingSquares from './HeroFloatingSquares'
 
 const DIVISIONS = [
-  { icon: FiHome, label: 'Real Estate', to: '/services/real-estate' },
   { icon: FiCode, label: 'Software & AI', to: '/services/software-development' },
   { icon: FiVideo, label: 'Media', to: '/services/media' },
 ]
@@ -87,23 +86,8 @@ export default function CenteredFutureHero() {
       />
 
       <motion.div style={{ y: contentY, opacity: contentOpacity }} className="relative z-10 max-w-4xl mx-auto py-6 sm:py-8">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
-          </span>
-          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">
-            AI pipelines now live in Dubai
-          </span>
-        </motion.div>
-
         <motion.h1
-          className="mt-7 font-heading text-5xl sm:text-6xl md:text-7xl lg:text-[5.75rem] font-bold text-white tracking-tight leading-[1.02]"
+          className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-[5.75rem] font-bold text-white tracking-tight leading-[1.02]"
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
           variants={{ visible: { transition: { staggerChildren: 0.09 } }, hidden: {} }}
@@ -144,7 +128,7 @@ export default function CenteredFutureHero() {
           transition={{ delay: 0.55, duration: 0.5 }}
           className="mt-4 text-base sm:text-lg text-white/55 max-w-xl mx-auto leading-relaxed"
         >
-          Property, platforms and production under one roof, with AI built into every service.
+          Software, AI pipelines and media production under one roof, with AI built into everything we do.
         </motion.p>
 
         <motion.div

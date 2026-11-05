@@ -33,7 +33,7 @@ export default function Careers() {
   }, [])
 
   const perks = [
-    { icon: FiLayers, title: 'Three industries, one team', text: 'Work across real estate, software and media, not just one lane.' },
+    { icon: FiLayers, title: 'Tech and creative, one team', text: 'Work across software, AI and media, not just one lane.' },
     { icon: FiCpu, title: 'AI-first tools', text: 'Ship with the latest AI pipelines and tooling every day.' },
     { icon: FiTrendingUp, title: 'Room to grow', text: 'Real ownership, mentorship and a clear path upward.' },
     { icon: FiGlobe, title: 'Dubai HQ, global clients', text: 'Work with brands and organisations around the world.' },
@@ -45,7 +45,7 @@ export default function Careers() {
         label="Careers"
         title="Build the future"
         highlight="with us."
-        description="We're engineers, creatives and property experts working side by side. If you love shipping great work, you'll fit right in."
+        description="We're engineers, editors and creatives working side by side. If you love shipping great work, you'll fit right in."
         crumbs={[{ label: 'Careers' }]}
       >
         <a

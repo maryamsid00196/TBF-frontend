@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useInView, useReducedMotion, type PanInfo } fr
 import { FiChevronLeft, FiChevronRight, FiMaximize2, FiVolume2, FiVolumeX, FiPlay, FiPause } from 'react-icons/fi'
 import { PORTFOLIO, Lightbox, src, type PortfolioCategory, type PortfolioItem } from './MediaPortfolio'
 
-const FILTERS: ('All' | PortfolioCategory)[] = ['All', 'Commercial', 'CGI & AI', 'Brand', 'Real Estate']
+const FILTERS: ('All' | PortfolioCategory)[] = ['All', 'Commercial', 'CGI & AI', 'Brand']
 
 /** Shortest signed distance from `active` to `i` on a loop of length n. */
 function loopOffset(i: number, active: number, n: number) {
@@ -121,7 +121,7 @@ export default function Showreel() {
               transition={{ delay: 0.1 }}
               className="mt-4 text-lg text-white/65"
             >
-              Commercials, CGI and AI-generated films, brand content and real estate. Drag, swipe or use your arrow keys.
+              Commercials, CGI and AI-generated films, and brand content. Drag, swipe or use your arrow keys.
             </motion.p>
           </div>
           <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter showreel">

@@ -185,10 +185,6 @@ export default function ContactModal() {
                 className="input-dark"
               >
                 <option value="">Select...</option>
-                <option value="Real Estate">Real Estate</option>
-                <option value="Real Estate - Commercial">Real Estate - Commercial</option>
-                <option value="Real Estate - Residential">Real Estate - Residential</option>
-                <option value="Real Estate - Advisory">Real Estate - Advisory</option>
                 <option value="Media">Media</option>
                 <option value="Media - Pre-production">Media - Pre-production</option>
                 <option value="Media - Production">Media - Production</option>

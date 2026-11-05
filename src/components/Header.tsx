@@ -6,7 +6,6 @@ import { useContactModal } from '../context/ContactModalContext'
 import { CONTACT_PHONE_DISPLAY } from '../constants/contact'
 
 const TBG_SERVICES = [
-  { label: 'Real Estate', path: '/services/real-estate' },
   { label: 'Media', path: '/services/media' },
   { label: 'Software & AI', path: '/services/software-development' },
 ]

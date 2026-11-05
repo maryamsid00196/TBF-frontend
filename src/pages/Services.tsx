@@ -8,16 +8,6 @@ import { useContactModal } from '../context/ContactModalContext'
 
 const INDEX = [
   {
-    division: 'Real Estate',
-    slug: 'real-estate',
-    accent: '#818cf8',
-    items: [
-      { label: 'Commercial acquisitions & leasing', anchor: 'commercial' },
-      { label: 'Residential sales & lettings', anchor: 'residential' },
-      { label: 'Investment & market advisory', anchor: 'advisory' },
-    ],
-  },
-  {
     division: 'Software & AI',
     slug: 'software-development',
     accent: '#22d3ee',
@@ -60,12 +50,12 @@ export default function Services() {
         label="What We Offer"
         title="Everything you need to"
         highlight="grow, under one roof."
-        description="Real estate, software and media, delivered by one team. Pick a single service or combine them, and get one partner who is accountable for the whole result."
+        description="Software, AI and media, delivered by one team. Pick a single service or combine them, and get one partner who is accountable for the whole result."
         crumbs={[{ label: 'Services' }]}
       >
         <div className="flex flex-wrap gap-8 text-sm">
           {[
-            ['3', 'specialist divisions'],
+            ['2', 'specialist divisions'],
             ['15+', 'years delivering'],
             ['200+', 'projects shipped'],
           ].map(([v, l]) => (
@@ -80,7 +70,7 @@ export default function Services() {
       <section className="relative overflow-hidden py-20 lg:py-24 bg-surface">
         <SectionBackdrop variant="surface" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {SERVICES.map((s, i) => (
               <ServiceCard key={s.slug} s={s} i={i} />
             ))}
@@ -107,7 +97,7 @@ export default function Services() {
           >
             Jump straight to what you need
           </motion.h2>
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
             {INDEX.map((col, ci) => (
               <motion.div
                 key={col.division}
@@ -149,7 +139,7 @@ export default function Services() {
             <h2 className="font-heading text-3xl lg:text-5xl font-bold text-white tracking-tight">
               Five steps. <span className="text-gradient-brand">No surprises.</span>
             </h2>
-            <p className="mt-4 text-white/60">The same process for a property search, a mobile app or a brand film.</p>
+            <p className="mt-4 text-white/60">The same process for a website, an AI pipeline or a brand film.</p>
           </div>
           <div className="relative mt-14 grid gap-6 md:grid-cols-5">
             <div className="hidden md:block absolute left-[10%] right-[10%] top-7 h-px bg-gradient-to-r from-indigo-500/0 via-cyan-400/50 to-indigo-500/0" aria-hidden />

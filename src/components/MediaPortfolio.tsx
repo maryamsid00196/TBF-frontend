@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronLeft, FiChevronRight, FiPlay, FiX } from 'react-icons/fi'
 
-export type PortfolioCategory = 'Commercial' | 'CGI & AI' | 'Brand' | 'Real Estate'
+export type PortfolioCategory = 'Commercial' | 'CGI & AI' | 'Brand'
 
 export type PortfolioItem = {
   slug: string
@@ -22,7 +22,7 @@ export const PORTFOLIO: PortfolioItem[] = [
   { slug: 'power-horse-machine', title: 'Power Horse: Machine Power', category: 'Commercial', aspect: VERTICAL },
   { slug: 'hind-tahnoun', title: 'Hind Tahnoun', category: 'Brand', aspect: VERTICAL },
   { slug: 'laundry-business', title: 'Laundry Business', category: 'Brand', aspect: VERTICAL },
-  { slug: 'real-estate', title: 'Real Estate', category: 'Real Estate', aspect: VERTICAL },
+  { slug: 'real-estate', title: 'Property Showcase', category: 'Brand', aspect: VERTICAL },
 ]
 
 export const src = (slug: string, ext: 'mp4' | 'jpg') => `/portfolio/${slug}.${ext}`

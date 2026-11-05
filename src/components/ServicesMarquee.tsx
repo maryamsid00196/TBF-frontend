@@ -1,5 +1,4 @@
 const TICKER_SEGMENTS = [
-  'Real Estate',
   'Software',
   'AI',
   'Web and mobile',

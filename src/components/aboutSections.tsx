@@ -16,7 +16,6 @@ import {
   FiLink2,
   FiShield,
   FiUsers,
-  FiHome,
   FiCode,
   FiVideo,
 } from 'react-icons/fi'
@@ -40,7 +39,6 @@ const MILESTONES = [
 ]
 
 const DIVISION_TILES = [
-  { icon: FiHome, name: 'Real Estate', text: 'Commercial, residential & advisory', accent: '#818cf8' },
   { icon: FiCode, name: 'Software & AI', text: 'Pipelines, web & mobile apps', accent: '#22d3ee' },
   { icon: FiVideo, name: 'Media', text: 'Production, CGI & social', accent: '#c084fc' },
 ]
@@ -50,9 +48,9 @@ type Item = { icon: IconType; title: string; text: string }
 const DIFFERENTIATORS: (Item & { stat: string; statLabel: string })[] = [
   {
     icon: FiBriefcase,
-    title: 'One partner, three disciplines',
-    text: 'Property, platforms and production under one roof. Your listing gets filmed by our crew, your website is built by our engineers, and nothing gets lost between agencies.',
-    stat: '3',
+    title: 'One partner, tech and creative',
+    text: 'Software and media under one roof. Your content is filmed by our crew, your website and automations are built by our engineers, and nothing gets lost between agencies.',
+    stat: '2',
     statLabel: 'divisions, one team',
   },
   {
@@ -129,10 +127,10 @@ export function OurStorySection() {
             </h2>
             <p className="mt-6 text-lg text-white/70 leading-relaxed">
               TBG started with a simple idea: clients shouldn't need a different agency for every part of their growth.
-              So we brought real estate, technology and creative production under one roof.
+              So we brought technology, AI and creative production under one roof.
             </p>
             <p className="mt-4 text-white/60 leading-relaxed">
-              Today one team can find your space, build your platform and tell your story, with AI working behind every
+              Today one team can build your platform, automate your operations and tell your story, with AI working behind every
               service to make it faster and smarter.
             </p>
           </motion.div>
@@ -431,7 +429,7 @@ export function AboutCTASection() {
   const { openModal } = useContactModal()
   const ctas = [
     { icon: FiBriefcase, title: 'Start a project', desc: 'Tell us what you need and get a clear plan, timeline and quote.', label: 'Get in touch', action: () => openModal() },
-    { icon: FiUserPlus, title: 'Join our team', desc: 'Engineers, creatives and property experts building what comes next.', label: 'See open roles', to: '/careers' },
+    { icon: FiUserPlus, title: 'Join our team', desc: 'Engineers, editors and creatives building what comes next.', label: 'See open roles', to: '/careers' },
     { icon: FiLink2, title: 'Become a partner', desc: 'Agencies, developers and brands: let\'s create more together.', label: 'Explore partnerships', action: () => openModal({ service_interest: 'Other' }) },
   ]
 
