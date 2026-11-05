@@ -2,27 +2,30 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiChevronLeft, FiChevronRight, FiPlay, FiX } from 'react-icons/fi'
 
-type PortfolioItem = {
+export type PortfolioCategory = 'Commercial' | 'CGI & AI' | 'Brand' | 'Real Estate'
+
+export type PortfolioItem = {
   slug: string
   title: string
+  category: PortfolioCategory
   /** width / height of the source video */
   aspect: number
 }
 
 const VERTICAL = 9 / 16
 
-const PORTFOLIO: PortfolioItem[] = [
-  { slug: 'power-horse-car-chase', title: 'Power Horse: Car Chase', aspect: VERTICAL },
-  { slug: 'sherra-dubai-scifi', title: 'SHERRA Dubai', aspect: VERTICAL },
-  { slug: 'kenzie-pistachio-cgi', title: 'KENZIE Pistachio', aspect: VERTICAL },
-  { slug: 'brands-for-less', title: 'Brands For Less', aspect: VERTICAL },
-  { slug: 'power-horse-machine', title: 'Power Horse: Machine Power', aspect: VERTICAL },
-  { slug: 'hind-tahnoun', title: 'Hind Tahnoun', aspect: VERTICAL },
-  { slug: 'laundry-business', title: 'Laundry Business', aspect: VERTICAL },
-  { slug: 'real-estate', title: 'Real Estate', aspect: VERTICAL },
+export const PORTFOLIO: PortfolioItem[] = [
+  { slug: 'power-horse-car-chase', title: 'Power Horse: Car Chase', category: 'Commercial', aspect: VERTICAL },
+  { slug: 'sherra-dubai-scifi', title: 'SHERRA Dubai', category: 'CGI & AI', aspect: VERTICAL },
+  { slug: 'kenzie-pistachio-cgi', title: 'KENZIE Pistachio', category: 'CGI & AI', aspect: VERTICAL },
+  { slug: 'brands-for-less', title: 'Brands For Less', category: 'Commercial', aspect: VERTICAL },
+  { slug: 'power-horse-machine', title: 'Power Horse: Machine Power', category: 'Commercial', aspect: VERTICAL },
+  { slug: 'hind-tahnoun', title: 'Hind Tahnoun', category: 'Brand', aspect: VERTICAL },
+  { slug: 'laundry-business', title: 'Laundry Business', category: 'Brand', aspect: VERTICAL },
+  { slug: 'real-estate', title: 'Real Estate', category: 'Real Estate', aspect: VERTICAL },
 ]
 
-const src = (slug: string, ext: 'mp4' | 'jpg') => `/portfolio/${slug}.${ext}`
+export const src = (slug: string, ext: 'mp4' | 'jpg') => `/portfolio/${slug}.${ext}`
 
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -74,7 +77,7 @@ function PreviewTile({ item, onOpen }: { item: PortfolioItem; onOpen: () => void
   )
 }
 
-function Lightbox({ item, onClose }: { item: PortfolioItem; onClose: () => void }) {
+export function Lightbox({ item, onClose }: { item: PortfolioItem; onClose: () => void }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)

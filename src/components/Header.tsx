@@ -8,7 +8,7 @@ import { CONTACT_PHONE_DISPLAY } from '../constants/contact'
 const TBG_SERVICES = [
   { label: 'Real Estate', path: '/services/real-estate' },
   { label: 'Media', path: '/services/media' },
-  { label: 'Software Development', path: '/services/software-development' },
+  { label: 'Software & AI', path: '/services/software-development' },
 ]
 
 const menuItems = [
@@ -17,7 +17,7 @@ const menuItems = [
     path: '/#story',
     children: [
       { label: 'Our Story', path: '/#story' },
-      { label: 'What Makes Us Different', path: '/#different' },
+      { label: 'Why TBG', path: '/#different' },
     ],
   },
   {
@@ -25,6 +25,7 @@ const menuItems = [
     path: '/services',
     children: TBG_SERVICES,
   },
+  { label: 'Our Work', path: '/#showreel' },
   { label: 'Contact Us', path: '/contact' },
   { label: 'Careers', path: '/careers' },
 ]

@@ -1,509 +1,352 @@
-import { useParams, Link, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useParams, Link, Navigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { FiArrowRight, FiCheck } from 'react-icons/fi'
 import { useContactModal } from '../context/ContactModalContext'
-import MediaPortfolio from '../components/MediaPortfolio'
-import { FiCpu, FiMonitor, FiSmartphone, FiImage, FiVideo, FiLayers, FiFilm } from 'react-icons/fi'
+import CaseStudies from '../components/CaseStudies'
+import Showreel from '../components/Showreel'
+import PageHero, { CTABand } from '../components/PageHero'
+import SectionBackdrop from '../components/SectionBackdrop'
 
-const SECTION_ANIMATION = {
-  initial: { opacity: 0, y: 32 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' },
-  transition: { duration: 0.5 },
-}
-
-function SectionBlock({
-  id,
-  label,
-  title,
-  description,
-  features,
-  serviceInterest,
-  openModal,
-  children,
-  sectionClassName = 'bg-surface',
-  backgroundSlot,
-  graphicOnSide,
-  accent = '#818cf8',
-}: {
+type Feature = { title: string; text: string }
+type Block = {
   id: string
   label: string
   title: string
   description: string
-  features: string[]
+  features: Feature[]
+  idealFor: string
   serviceInterest: string
-  openModal: (initial?: { service_interest?: string }) => void
-  children?: React.ReactNode
-  sectionClassName?: string
-  backgroundSlot?: React.ReactNode
-  graphicOnSide?: boolean
-  accent?: string
+}
+
+type ServiceContent = {
+  name: string
+  label: string
+  title: string
+  highlight: string
+  description: string
+  accent: string
+  stats: [string, string][]
+  blocks: Block[]
+  cta: string
+}
+
+const CONTENT: Record<string, ServiceContent> = {
+  'real-estate': {
+    name: 'Real Estate',
+    label: 'Real Estate',
+    title: 'Property decisions,',
+    highlight: 'made with confidence.',
+    description:
+      'Commercial, residential and investment real estate across the UAE. We find, negotiate, manage and advise, so every move is backed by data and local expertise.',
+    accent: '#818cf8',
+    stats: [
+      ['3', 'practice areas'],
+      ['UAE', 'wide coverage'],
+      ['1', 'advisor, start to finish'],
+    ],
+    cta: 'Looking to buy, lease or invest?',
+    blocks: [
+      {
+        id: 'commercial',
+        label: 'Commercial',
+        title: 'Commercial Real Estate',
+        description: "Offices, retail and industrial space that fits how your business works today, and where it's heading.",
+        features: [
+          { title: 'Acquisition & due diligence', text: 'Shortlists, site visits, title checks and full financial due diligence before you commit.' },
+          { title: 'Leasing & negotiation', text: 'Market-backed terms, fit-out allowances and lease structures that protect you.' },
+          { title: 'Asset & portfolio management', text: 'Tenant relations, rent collection and maintenance handled end to end.' },
+          { title: 'Valuation & market analysis', text: 'Independent pricing, comparables and yield analysis behind every decision.' },
+        ],
+        idealFor: 'Growing companies, retailers and investors with commercial portfolios.',
+        serviceInterest: 'Real Estate - Commercial',
+      },
+      {
+        id: 'residential',
+        label: 'Residential',
+        title: 'Residential Real Estate',
+        description: 'Buying, selling or renting a home in the UAE, with one advisor from the first viewing to handover.',
+        features: [
+          { title: 'Buyer representation', text: "We search, shortlist and negotiate on your side, not the seller's." },
+          { title: 'Sales & marketing', text: 'Professional photography, video tours and targeted listings produced by our media team.' },
+          { title: 'Off-plan & new launches', text: 'Access to new developments, payment plans and developer due diligence.' },
+          { title: 'Relocation support', text: 'Area guides, school and commute advice, and settling-in help for new arrivals.' },
+        ],
+        idealFor: 'Families, professionals relocating to Dubai and first-time buyers.',
+        serviceInterest: 'Real Estate - Residential',
+      },
+      {
+        id: 'advisory',
+        label: 'Advisory',
+        title: 'Investment & Advisory',
+        description: 'Strategy for investors who want returns, not guesswork.',
+        features: [
+          { title: 'Market research', text: 'Area-level trends, supply pipelines and price outlooks.' },
+          { title: 'Investment strategy', text: 'Portfolio plans matched to your budget, risk appetite and timeline.' },
+          { title: 'Feasibility & risk', text: 'Development appraisals, scenario modelling and exit planning.' },
+          { title: 'Regulation & compliance', text: 'Guidance on ownership rules, fees, registrations and residency options.' },
+        ],
+        idealFor: 'Individual investors, family offices and developers.',
+        serviceInterest: 'Real Estate - Advisory',
+      },
+    ],
+  },
+  'software-development': {
+    name: 'Software & AI',
+    label: 'Software & AI',
+    title: 'Software that',
+    highlight: 'works while you sleep.',
+    description:
+      'AI pipelines, web platforms and mobile apps built around how your business actually runs. We design, build, launch and keep improving them.',
+    accent: '#22d3ee',
+    stats: [
+      ['7/7', 'pipelines running daily'],
+      ['4+', 'channels automated'],
+      ['End-to-end', 'design to launch'],
+    ],
+    cta: 'Have a process that should run itself?',
+    blocks: [
+      {
+        id: 'ai',
+        label: 'AI & Automation',
+        title: 'AI Pipelines & Automation',
+        description:
+          'Turn repetitive work into systems that run themselves, from content production to reporting to customer replies.',
+        features: [
+          { title: 'Content & marketing pipelines', text: 'Footage in, branded posts out, published daily across every channel.' },
+          { title: 'Process automation', text: 'Bots that fill sheets, post updates, chase follow-ups and log every run.' },
+          { title: 'AI agents & assistants', text: 'Chat and WhatsApp assistants trained on your services, prices and tone.' },
+          { title: 'Document & data AI', text: 'Invoices, receipts and forms read automatically and turned into clean data.' },
+          { title: 'Analytics & scorecards', text: 'Weekly dashboards that pull rankings, reviews and sales into one view.' },
+        ],
+        idealFor: 'Teams losing hours every week to manual, repeatable work.',
+        serviceInterest: 'Software Development - AI',
+      },
+      {
+        id: 'web',
+        label: 'Web',
+        title: 'Web Platforms',
+        description: 'Fast, design-led websites and web apps that convert visitors and run your operations.',
+        features: [
+          { title: 'Marketing websites', text: 'Sites built to load fast, rank well and turn visitors into enquiries.' },
+          { title: 'Web apps & portals', text: 'Client portals, booking systems, quote builders and internal tools.' },
+          { title: 'Dashboards & admin panels', text: 'Live data, role-based access and reports your team will actually use.' },
+          { title: 'E-commerce', text: 'Online stores with payments, inventory and delivery integrations.' },
+          { title: 'APIs & integrations', text: 'Connect your CRM, accounting, WhatsApp and Google tools.' },
+        ],
+        idealFor: 'Businesses that have outgrown spreadsheets and template websites.',
+        serviceInterest: 'Software Development - Web',
+      },
+      {
+        id: 'mobile',
+        label: 'Mobile',
+        title: 'Mobile Apps',
+        description: 'iOS and Android apps with a native feel, from first prototype to App Store launch.',
+        features: [
+          { title: 'Cross-platform & native', text: 'One codebase for iOS and Android, or fully native when performance demands it.' },
+          { title: 'UX & product design', text: 'Clickable prototypes tested with real users before development starts.' },
+          { title: 'Offline & performance', text: 'Apps that stay fast on slow networks and keep working offline.' },
+          { title: 'Launch & growth', text: 'Store submission, analytics, push notifications and ongoing updates.' },
+        ],
+        idealFor: 'Startups launching a product and brands building customer apps.',
+        serviceInterest: 'Software Development - Mobile',
+      },
+    ],
+  },
+  media: {
+    name: 'Media',
+    label: 'Media',
+    title: 'Content that',
+    highlight: 'people stop for.',
+    description:
+      'Commercials, CGI, AI video, photography and social media, made in-house from the first idea to the final post.',
+    accent: '#c084fc',
+    stats: [
+      ['In-house', 'crew & editors'],
+      ['CGI + AI', 'production'],
+      ['Daily', 'social content'],
+    ],
+    cta: 'Ready for content that performs?',
+    blocks: [
+      {
+        id: 'pre-production',
+        label: 'Pre-production',
+        title: 'Concept & Pre-production',
+        description: 'Every great piece starts on paper. We shape the idea before a camera rolls.',
+        features: [
+          { title: 'Creative concepts', text: 'Campaign ideas built around your audience and your goal.' },
+          { title: 'Scriptwriting', text: 'Scripts, voice-overs and hooks written for each platform.' },
+          { title: 'Storyboards & shot lists', text: 'Every frame planned so shoot days run on time and on budget.' },
+        ],
+        idealFor: 'Brand launches, campaigns and product films.',
+        serviceInterest: 'Media - Pre-production',
+      },
+      {
+        id: 'production',
+        label: 'Production',
+        title: 'Production',
+        description: 'Professional crews, cinema cameras and AI tools where they add real value.',
+        features: [
+          { title: 'Cinematography', text: 'Commercials, brand films and short-form content shot to broadcast standard.' },
+          { title: 'Photography', text: 'Product, property, food and portrait photography.' },
+          { title: 'AI video & imagery', text: 'AI-generated scenes and visuals that would be impossible or costly to film.' },
+          { title: 'Sound recording', text: 'Clean on-set audio, voice-over recording and podcasts.' },
+        ],
+        idealFor: 'Brands that need premium footage without agency overheads.',
+        serviceInterest: 'Media - Production',
+      },
+      {
+        id: 'post-production',
+        label: 'Post-production',
+        title: 'Post-production, CGI & VFX',
+        description: 'Where raw footage becomes a finished film.',
+        features: [
+          { title: 'Editing', text: 'Pacing, story and platform-specific cuts from a single shoot.' },
+          { title: 'Colour grading', text: 'A consistent cinematic look across every deliverable.' },
+          { title: 'CGI & 3D', text: 'Product renders, 3D animation and CGI ads like the ones in our showreel.' },
+          { title: 'Motion graphics & VFX', text: 'Animated titles, effects and compositing.' },
+        ],
+        idealFor: 'Ads, product launches and anything that needs to look world-class.',
+        serviceInterest: 'Media - Post-production',
+      },
+      {
+        id: 'graphic-design',
+        label: 'Design',
+        title: 'Brand & Graphic Design',
+        description: 'Visual identities that look consistent everywhere your brand appears.',
+        features: [
+          { title: 'Brand identity', text: 'Logos, colour, typography and brand guidelines.' },
+          { title: 'Marketing creative', text: 'Campaign key visuals, ads and print.' },
+          { title: 'Social templates', text: 'Branded templates your team can reuse every week.' },
+        ],
+        idealFor: 'New businesses and brands ready for a refresh.',
+        serviceInterest: 'Media - Graphic Design',
+      },
+      {
+        id: 'social-media',
+        label: 'Social',
+        title: 'Social Media Management',
+        description:
+          'Daily content and growth across Instagram, TikTok, YouTube and Google, powered by our AI content pipeline.',
+        features: [
+          { title: 'Daily posting', text: 'A steady stream of reels and posts, each checked before it goes live.' },
+          { title: 'Paid ads', text: 'Meta, TikTok and Google campaigns tracked to leads and sales.' },
+          { title: 'SEO & Google Business', text: 'Local search and Maps visibility so customers find you first.' },
+          { title: 'Influencer partnerships', text: 'Creator outreach, briefs and collaboration management.' },
+        ],
+        idealFor: 'Local businesses that want to be visible every day without the effort.',
+        serviceInterest: 'Media - Social Media Management',
+      },
+    ],
+  },
+}
+
+function ServiceBlock({
+  block,
+  index,
+  accent,
+  onRequest,
+}: {
+  block: Block
+  index: number
+  accent: string
+  onRequest: (interest: string) => void
 }) {
+  const alt = index % 2 === 1
   return (
-    <section id={id} className={`relative py-16 lg:py-24 scroll-mt-24 overflow-hidden ${sectionClassName}`}>
-      {backgroundSlot && (
-        <div
-          className={`absolute top-0 bottom-0 pointer-events-none ${graphicOnSide ? 'right-0 w-1/2 lg:w-[45%]' : 'inset-0'}`}
-          aria-hidden
-        >
-          {graphicOnSide && (
-            <div
-              className="absolute left-0 top-0 bottom-0 w-px hidden lg:block"
-              style={{ background: `linear-gradient(to bottom, transparent, ${accent}66, transparent)` }}
-            />
-          )}
-          {backgroundSlot}
-        </div>
-      )}
+    <section id={block.id} className={`relative overflow-hidden py-20 lg:py-24 scroll-mt-24 ${alt ? 'bg-primary' : 'bg-surface'}`}>
+      {!alt && <SectionBackdrop variant="surface" />}
       <div
-        className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${graphicOnSide ? 'lg:max-w-[55%] lg:mr-auto lg:pr-8' : ''}`}
-      >
-        <motion.p
-          {...SECTION_ANIMATION}
-          className="section-label mb-2"
-          style={{ color: accent, background: `${accent}1a`, borderColor: `${accent}40` }}
+        className={`absolute top-1/2 h-[420px] w-[420px] -translate-y-1/2 rounded-full blur-[120px] opacity-25 pointer-events-none ${alt ? '-left-40' : '-right-40'}`}
+        style={{ background: accent }}
+        aria-hidden
+      />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-10 lg:grid-cols-12 lg:gap-14">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          className="lg:col-span-5 lg:sticky lg:top-28 self-start"
         >
-          {label}
-        </motion.p>
-        <motion.h2 {...SECTION_ANIMATION} className="font-heading text-3xl lg:text-4xl font-bold text-white mb-4">
-          {title}
-        </motion.h2>
-        <motion.p {...SECTION_ANIMATION} className="text-white/70 max-w-3xl text-lg mb-8">
-          {description}
-        </motion.p>
-        <motion.ul {...SECTION_ANIMATION} className="grid sm:grid-cols-2 gap-3 mb-10">
-          {features.map((f, i) => (
-            <li key={i} className="flex items-center gap-2 text-white/80">
-              <span style={{ color: accent }}>✓</span> {f}
-            </li>
-          ))}
-        </motion.ul>
-        {children}
-        <motion.div {...SECTION_ANIMATION} className="mt-10">
-          <motion.button
-            onClick={() => openModal({ service_interest: serviceInterest })}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="btn-glow px-6 py-3.5 text-white font-semibold"
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-sm text-white/30">{String(index + 1).padStart(2, '0')}</span>
+            <span
+              className="section-label"
+              style={{ color: accent, background: `${accent}1a`, borderColor: `${accent}40` }}
+            >
+              {block.label}
+            </span>
+          </div>
+          <h2 className="mt-4 font-heading text-3xl lg:text-5xl font-bold text-white tracking-tight">{block.title}</h2>
+          <p className="mt-4 text-lg text-white/65 leading-relaxed">{block.description}</p>
+          <div className="mt-6 flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+            <FiCheck className="mt-0.5 shrink-0" style={{ color: accent }} />
+            <p className="text-sm text-white/70">
+              <span className="font-semibold text-white">Ideal for: </span>
+              {block.idealFor}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => onRequest(block.serviceInterest)}
+            className="group mt-8 inline-flex items-center gap-2 btn-glow px-6 py-3.5 font-semibold text-white"
           >
-            Request a Service
-          </motion.button>
+            Request this service
+            <FiArrowRight className="transition group-hover:translate-x-1" />
+          </button>
         </motion.div>
+
+        <div className="lg:col-span-7 grid gap-4 sm:grid-cols-2">
+          {block.features.map((f, i) => (
+            <motion.div
+              key={f.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ delay: i * 0.06 }}
+              className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d1324]/80 p-6 transition hover:-translate-y-1 hover:border-white/20 ${
+                block.features.length % 2 === 1 && i === block.features.length - 1 ? 'sm:col-span-2' : ''
+              }`}
+            >
+              <div
+                className="absolute inset-x-0 top-0 h-px opacity-0 transition group-hover:opacity-100"
+                style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }}
+              />
+              <span className="font-mono text-xs" style={{ color: accent }}>
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 className="mt-3 font-heading text-lg font-semibold text-white">{f.title}</h3>
+              <p className="mt-2 text-sm text-white/60 leading-relaxed">{f.text}</p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   )
 }
 
-/* AI section: AI logo with "thinking" glow, aligned to right side */
-function AIBackground() {
-  return (
-    <>
-      <div className="absolute inset-0 bg-gradient-radial opacity-40" />
-      <div className="absolute top-1/2 left-1/2 -translate-y-1/2 w-[320px] h-[320px]">
-        <motion.div
-          className="absolute inset-0 rounded-full bg-indigo-500/20 blur-[60px]"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-        >
-          <FiCpu className="text-[100px] text-indigo-400/25" />
-        </motion.div>
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-2.5 h-2.5 rounded-full bg-cyan-400/50"
-          animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.5, 1] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 0 }}
-        />
-        <motion.div
-          className="absolute top-1/3 right-1/4 w-2 h-2 rounded-full bg-indigo-400/50"
-          animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.5, 1] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-        />
-        <motion.div
-          className="absolute bottom-1/3 left-1/3 w-2 h-2 rounded-full bg-violet-400/40"
-          animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.5, 1] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-        />
-      </div>
-    </>
-  )
-}
-
-/* Web section: computer screen with things running, aligned to right side */
-function WebBackground() {
-  return (
-    <>
-      <div className="absolute inset-0 bg-primary/80" />
-      <div className="absolute bottom-0 right-0 left-1/2 top-0 flex items-end justify-center pb-6 pr-4">
-        <motion.div
-          className="w-full max-w-md h-52 rounded-t-xl border-4 border-white/20 bg-surface/90 overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <div className="h-6 bg-white/10 flex items-center gap-2 px-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-            <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-            <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-          </div>
-          <div className="p-3 font-mono text-xs text-cyan-400/80 space-y-0.5">
-            {['const app = () => {', '  return Dashboard()', '}', ''].map((line, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-              >
-                {line}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-      <FiMonitor className="absolute right-8 top-1/4 text-[72px] text-white/5" />
-    </>
-  )
-}
-
-/* Mobile section: floating balls and phone, aligned to right side */
-function MobileBackground() {
-  const balls = [
-    { size: 56, right: '8%', top: '18%', color: 'bg-cyan-400/30', anim: 'ball-float' },
-    { size: 44, right: '25%', top: '28%', color: 'bg-indigo-400/25', anim: 'ball-float-2' },
-    { size: 64, right: '12%', top: '68%', color: 'bg-violet-400/20', anim: 'ball-float-3' },
-    { size: 36, right: '32%', top: '62%', color: 'bg-cyan-400/25', anim: 'ball-float-4' },
-    { size: 48, right: '18%', top: '42%', color: 'bg-indigo-400/20', anim: 'ball-float-5' },
-    { size: 40, right: '38%', top: '22%', color: 'bg-violet-400/25', anim: 'ball-float-6' },
-  ]
-  return (
-    <>
-      <div className="absolute inset-0 bg-surface" />
-      <FiSmartphone className="absolute right-4 top-1/2 -translate-y-1/2 text-[160px] text-white/10" />
-      {balls.map((b, i) => (
-        <motion.div
-          key={i}
-          className={`absolute rounded-full ${b.color} ${b.anim}`}
-          style={{
-            width: b.size,
-            height: b.size,
-            right: b.right,
-            top: b.top,
-          }}
-        />
-      ))}
-    </>
-  )
-}
-
-/* Graphic design: layers, color palette, pen tool vibe, right side */
-function GraphicBackground() {
-  return (
-    <>
-      <div className="absolute inset-0 bg-gradient-radial opacity-40" />
-      <FiLayers className="absolute right-8 top-1/2 -translate-y-1/2 text-[140px] text-cyan-400/15" />
-      <FiImage className="absolute right-16 top-1/4 text-[72px] text-indigo-400/15" />
-      <motion.div
-        className="absolute right-12 top-20 w-24 h-24 rounded-full border-2 border-cyan-400/25"
-        animate={{ scale: [1, 1.08, 1], rotate: [0, 90, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="absolute right-20 bottom-24 w-20 h-20 border-2 border-indigo-400/20 rotate-12"
-        animate={{ scale: [1, 1.1, 1], rotate: [12, 57, 12] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-      />
-      {/* Color swatch palette */}
-      <div className="absolute right-8 bottom-16 flex gap-2">
-        {['bg-cyan-400/30', 'bg-indigo-400/25', 'bg-violet-400/25', 'bg-pink-400/20'].map((c, i) => (
-          <motion.div
-            key={i}
-            className={`w-8 h-8 rounded-lg ${c}`}
-            animate={{ y: [0, -4, 0] }}
-            transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-          />
-        ))}
-      </div>
-      <motion.div
-        className="absolute right-24 top-1/3 w-14 h-14 bg-cyan-400/10 rounded-lg"
-        animate={{ opacity: [0.3, 0.7, 0.3] }}
-        transition={{ duration: 3, repeat: Infinity }}
-      />
-    </>
-  )
-}
-
-/* Videography: camera, film strip, play button, right side */
-function VideoBackground() {
-  return (
-    <>
-      <div className="absolute inset-0 bg-primary/70" />
-      <FiVideo className="absolute right-6 top-1/2 -translate-y-1/2 text-[120px] text-white/10" />
-      <FiFilm className="absolute right-12 top-1/4 text-[64px] text-cyan-400/15" />
-      <motion.div
-        className="absolute right-8 top-1/2 -translate-y-1/2 w-36 h-36 rounded-full border-4 border-white/15 flex items-center justify-center"
-        animate={{ scale: [1, 1.06, 1] }}
-        transition={{ duration: 3, repeat: Infinity }}
-      >
-        <div className="w-0 h-0 border-t-[20px] border-t-transparent border-l-[32px] border-l-white/20 border-b-[20px] border-b-transparent ml-1" />
-      </motion.div>
-      {/* Film strip holes */}
-      <div className="absolute right-4 bottom-20 flex flex-col gap-3">
-        {[1, 2, 3, 4].map((i) => (
-          <motion.div
-            key={i}
-            className="w-10 h-2 rounded-sm bg-black/30"
-            animate={{ opacity: [0.4, 0.8, 0.4] }}
-            transition={{ duration: 2, repeat: Infinity, delay: i * 0.15 }}
-          />
-        ))}
-      </div>
-      <motion.div
-        className="absolute right-20 top-24 w-16 h-16 rounded-lg border-2 border-cyan-400/20"
-        animate={{ opacity: [0.2, 0.6, 0.2] }}
-        transition={{ duration: 4, repeat: Infinity, delay: 0.5 }}
-      />
-    </>
-  )
-}
-
-function SoftwareDevelopmentPage({ openModal }: { openModal: (i?: { service_interest?: string }) => void }) {
-  return (
-    <>
-      <SectionBlock
-        id="ai"
-        label="AI Solutions"
-        title="AI and Intelligent Systems"
-        description="We integrate AI into your workflows, from chatbots and analytics to process automation and custom ML models."
-        features={[
-          'Custom AI and ML models and integrations',
-          'Chatbots and conversational AI',
-          'Process automation and RPA',
-          'Data analytics and insights',
-          'Computer vision and NLP',
-        ]}
-        serviceInterest="Software Development - AI"
-        openModal={openModal}
-        backgroundSlot={<AIBackground />}
-        graphicOnSide
-        accent="#a78bfa"
-      />
-      <SectionBlock
-        id="web"
-        label="Web"
-        title="Web Development"
-        description="From landing pages to full-scale web applications. Responsive, fast, and built for growth."
-        features={[
-          'React, Next.js, and modern frameworks',
-          'APIs and backend systems',
-          'E-commerce and dashboards',
-          'CMS and content-driven sites',
-          'Performance and SEO',
-        ]}
-        serviceInterest="Software Development - Web"
-        openModal={openModal}
-        sectionClassName="bg-primary"
-        backgroundSlot={<WebBackground />}
-        graphicOnSide
-        accent="#818cf8"
-      />
-      <SectionBlock
-        id="mobile"
-        label="Mobile"
-        title="Mobile Applications"
-        description="Native and cross-platform mobile apps with smooth transitions and a focus on UX and performance."
-        features={[
-          'iOS and Android native or cross-platform',
-          'Smooth transitions and native feel',
-          'Offline and performance optimization',
-          'Push and in-app experiences',
-          'App store deployment support',
-        ]}
-        serviceInterest="Software Development - Mobile"
-        openModal={openModal}
-        backgroundSlot={<MobileBackground />}
-        graphicOnSide
-        accent="#22d3ee"
-      />
-    </>
-  )
-}
-
-function RealEstatePage({ openModal }: { openModal: (i?: { service_interest?: string }) => void }) {
-  return (
-    <>
-      <SectionBlock
-        id="commercial"
-        label="Commercial"
-        title="Commercial Real Estate"
-        description="End-to-end commercial real estate services: acquisitions, leasing, management, and advisory."
-        features={[
-          'Property acquisition and due diligence',
-          'Leasing and tenant relations',
-          'Portfolio and asset management',
-          'Valuation and market analysis',
-          'Transaction support',
-        ]}
-        serviceInterest="Real Estate - Commercial"
-        openModal={openModal}
-        accent="#818cf8"
-      />
-      <SectionBlock
-        id="residential"
-        label="Residential"
-        title="Residential Real Estate"
-        description="Full-service residential support for buyers, sellers, and investors."
-        features={[
-          'Buyer and seller representation',
-          'Listing and marketing',
-          'Investment property advisory',
-          'Relocation and referrals',
-          'New development sales',
-        ]}
-        serviceInterest="Real Estate - Residential"
-        openModal={openModal}
-        sectionClassName="bg-primary"
-        accent="#22d3ee"
-      />
-      <SectionBlock
-        id="advisory"
-        label="Advisory"
-        title="Real Estate Advisory"
-        description="Strategic advice to help you make informed decisions and grow your portfolio."
-        features={[
-          'Market research and trends',
-          'Investment strategy',
-          'Risk and feasibility studies',
-          'Regulatory and compliance',
-          'Portfolio optimization',
-        ]}
-        serviceInterest="Real Estate - Advisory"
-        openModal={openModal}
-        accent="#c084fc"
-      />
-    </>
-  )
-}
-
-function MediaPage({ openModal }: { openModal: (i?: { service_interest?: string }) => void }) {
-  return (
-    <>
-      <MediaPortfolio />
-      <SectionBlock
-        id="pre-production"
-        label="Pre-production"
-        title="Pre-production"
-        description="Shape the story before cameras roll, with clear creative direction from day one."
-        features={['Ideation', 'Script writing', 'Storyboarding']}
-        serviceInterest="Media - Pre-production"
-        openModal={openModal}
-        backgroundSlot={<GraphicBackground />}
-        graphicOnSide
-        accent="#f472b6"
-      />
-      <SectionBlock
-        id="production"
-        label="Production"
-        title="Production"
-        description="Capture picture and sound with professional crews and modern tools, including AI-assisted workflows where they fit."
-        features={[
-          'Cinematography',
-          'AI video and photo generation',
-          'Photography',
-          'Audio recording',
-        ]}
-        serviceInterest="Media - Production"
-        openModal={openModal}
-        sectionClassName="bg-primary"
-        backgroundSlot={<VideoBackground />}
-        graphicOnSide
-        accent="#22d3ee"
-      />
-      <SectionBlock
-        id="post-production"
-        label="Post-production"
-        title="Post-production"
-        description="Polish and elevate your footage with full finishing, from edit suite to final deliverables."
-        features={[
-          'Video, photo, and audio editing',
-          'Color grading',
-          'Animation',
-          'CGI',
-          'Special effects',
-        ]}
-        serviceInterest="Media - Post-production"
-        openModal={openModal}
-        backgroundSlot={<VideoBackground />}
-        graphicOnSide
-        accent="#c084fc"
-      />
-      <SectionBlock
-        id="graphic-design"
-        label="Graphic Design"
-        title="Graphic Design"
-        description="Visual systems and assets that keep your brand consistent across every touchpoint."
-        features={[
-          'Brand identity and logos',
-          'Print and digital layouts',
-          'Marketing and campaign creative',
-          'Social templates and toolkits',
-        ]}
-        serviceInterest="Media - Graphic Design"
-        openModal={openModal}
-        sectionClassName="bg-primary"
-        backgroundSlot={<GraphicBackground />}
-        graphicOnSide
-        accent="#818cf8"
-      />
-      <SectionBlock
-        id="social-media"
-        label="Social Media Management"
-        title="Social Media Management"
-        description="Grow visibility and engagement with channel strategy, paid media, and creator partnerships."
-        features={[
-          'SEO',
-          'Ads (paid social and search)',
-          'Full social media handling and management',
-          'Influencer outreach and coordination',
-        ]}
-        serviceInterest="Media - Social Media Management"
-        openModal={openModal}
-        backgroundSlot={<GraphicBackground />}
-        graphicOnSide
-        accent="#f472b6"
-      />
-    </>
-  )
-}
-
-const SERVICE_META: Record<string, { name: string; description: string }> = {
-  'real-estate': {
-    name: 'Real Estate',
-    description: 'Commercial, residential, and advisory real estate solutions.',
-  },
-  media: {
-    name: 'Media',
-    description: 'Pre through post-production, graphic design, and social media management.',
-  },
-  'software-development': {
-    name: 'Software Development',
-    description: 'AI, web, and mobile. Custom software that scales.',
-  },
-}
-
 export default function ServiceDetail() {
   const { slug } = useParams<{ slug: string }>()
   const { openModal } = useContactModal()
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    const id = hash?.replace(/^#/, '')
+    if (!id) return
+    const timer = window.setTimeout(
+      () => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      120,
+    )
+    return () => window.clearTimeout(timer)
+  }, [hash, slug])
 
   if (slug === 'content-creation') {
     return <Navigate to="/services/media" replace />
   }
 
-  const meta = slug ? SERVICE_META[slug] : null
+  const c = slug ? CONTENT[slug] : null
 
-  if (!meta) {
+  if (!c) {
     return (
       <div className="min-h-[50vh] flex flex-col items-center justify-center px-4 bg-primary">
         <p className="text-white/70">Service not found.</p>
@@ -512,38 +355,63 @@ export default function ServiceDetail() {
     )
   }
 
+  const jumpLinks = [
+    ...(slug === 'software-development' ? [{ id: 'work', label: 'Our work' }] : []),
+    ...(slug === 'media' ? [{ id: 'portfolio', label: 'Showreel' }] : []),
+    ...c.blocks.map((b) => ({ id: b.id, label: b.title })),
+  ]
+
+  const request = (interest: string) => openModal({ service_interest: interest })
+
   return (
     <>
-      <section className="relative py-24 bg-primary overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-radial" aria-hidden />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="hero-title text-white"
-          >
-            {meta.name}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="mt-4 text-xl text-white/80 max-w-2xl mx-auto"
-          >
-            {meta.description}
-          </motion.p>
-          <Link
-            to="/services"
-            className="inline-block mt-6 text-cyan-400 hover:text-cyan-300 text-sm font-medium"
-          >
-            ← Back to Services
-          </Link>
+      <PageHero
+        label={c.label}
+        title={c.title}
+        highlight={c.highlight}
+        description={c.description}
+        accent={c.accent}
+        crumbs={[{ label: 'Services', to: '/services' }, { label: c.name }]}
+      >
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-wrap gap-8 text-sm">
+            {c.stats.map(([v, l]) => (
+              <div key={l}>
+                <p className="font-heading text-3xl font-bold text-white">{v}</p>
+                <p className="text-white/50">{l}</p>
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {jumpLinks.map((j) => (
+              <a
+                key={j.id}
+                href={`#${j.id}`}
+                onClick={(e) => {
+                  e.preventDefault()
+                  document.getElementById(j.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                }}
+                className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-white/75 backdrop-blur transition hover:border-cyan-300/50 hover:text-white"
+              >
+                {j.label}
+              </a>
+            ))}
+          </div>
         </div>
-      </section>
+      </PageHero>
 
-      {slug === 'software-development' && <SoftwareDevelopmentPage openModal={openModal} />}
-      {slug === 'real-estate' && <RealEstatePage openModal={openModal} />}
-      {slug === 'media' && <MediaPage openModal={openModal} />}
+      {slug === 'software-development' && <CaseStudies />}
+      {slug === 'media' && (
+        <div id="portfolio" className="scroll-mt-20">
+          <Showreel />
+        </div>
+      )}
+
+      {c.blocks.map((b, i) => (
+        <ServiceBlock key={b.id} block={b} index={i} accent={c.accent} onRequest={request} />
+      ))}
+
+      <CTABand title={c.cta} onPrimary={() => openModal({ service_interest: slug === 'software-development' ? 'Software Development' : c.name })} primaryLabel="Talk to our team" />
     </>
   )
 }

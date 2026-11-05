@@ -1,21 +1,24 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
-  FiUsers,
   FiCpu,
   FiTrendingUp,
   FiTarget,
   FiAward,
   FiZap,
   FiHeart,
-  FiCheck,
   FiChevronRight,
+  FiChevronLeft,
   FiStar,
   FiBriefcase,
   FiUserPlus,
   FiLink2,
   FiShield,
+  FiUsers,
+  FiHome,
+  FiCode,
+  FiVideo,
 } from 'react-icons/fi'
 import type { IconType } from 'react-icons'
 import { useContactModal } from '../context/ContactModalContext'
@@ -36,92 +39,51 @@ const MILESTONES = [
   { year: '2024', title: 'Expanded in UAE' },
 ]
 
-type DifferentiatorTab = {
-  id: string
-  icon: IconType
-  title: string
-  content: string
-  quote?: string
-  metric?: string
-  metricLabel?: string
-  progress?: number
-}
+const DIVISION_TILES = [
+  { icon: FiHome, name: 'Real Estate', text: 'Commercial, residential & advisory', accent: '#818cf8' },
+  { icon: FiCode, name: 'Software & AI', text: 'Pipelines, web & mobile apps', accent: '#22d3ee' },
+  { icon: FiVideo, name: 'Media', text: 'Production, CGI & social', accent: '#c084fc' },
+]
 
-const CORE_VALUES: DifferentiatorTab[] = [
+type Item = { icon: IconType; title: string; text: string }
+
+const DIFFERENTIATORS: (Item & { stat: string; statLabel: string })[] = [
   {
-    id: 'results',
-    icon: FiTarget,
-    title: 'Results driven',
-    quote: 'We measure success by your outcomes.',
-    content: 'Every project is scoped to clear KPIs and delivered on time.',
+    icon: FiBriefcase,
+    title: 'One partner, three disciplines',
+    text: 'Property, platforms and production under one roof. Your listing gets filmed by our crew, your website is built by our engineers, and nothing gets lost between agencies.',
+    stat: '3',
+    statLabel: 'divisions, one team',
   },
   {
-    id: 'innovation',
-    icon: FiZap,
-    title: 'Innovation first',
-    quote: 'Creativity is inventing, experimenting, growing.',
-    content: 'We invest in technology and methods that keep you ahead.',
+    icon: FiCpu,
+    title: 'AI built in, not bolted on',
+    text: 'We run AI pipelines in production every day, so we know what works. Every service we offer is faster and smarter because of it.',
+    stat: '7/7',
+    statLabel: 'days our pipelines run',
   },
   {
-    id: 'partnership',
-    icon: FiUsers,
-    title: 'Client partnership',
-    quote: 'Your growth is our growth.',
-    content: 'Long-term relationships built on trust and transparency.',
+    icon: FiTrendingUp,
+    title: 'Built to scale with you',
+    text: 'From a single shoot to a multi-brand automation stack, we adapt to where you are and grow with you.',
+    stat: '15+',
+    statLabel: 'industries served',
   },
   {
-    id: 'excellence',
-    icon: FiAward,
-    title: 'Excellence always',
-    quote: 'Quality is never an accident.',
-    content: 'Rigorous processes and a culture of continuous improvement.',
-  },
-  {
-    id: 'integrity',
-    icon: FiShield,
-    title: 'Integrity',
-    quote: 'We do what we say we will.',
-    content: 'Ethics and accountability in every engagement.',
+    icon: FiHeart,
+    title: 'People you can reach',
+    text: 'A named point of contact, clear timelines and honest updates. No ticket queues.',
+    stat: '1',
+    statLabel: 'point of contact',
   },
 ]
 
-const DIFFERENTIATORS: DifferentiatorTab[] = [
-  {
-    id: 'integrated',
-    icon: FiBriefcase,
-    title: 'Integrated offering',
-    content: 'Real estate, software, and media under one roof. Fewer handoffs, faster delivery.',
-    metric: '3',
-    metricLabel: 'core divisions',
-    progress: 100,
-  },
-  {
-    id: 'tech',
-    icon: FiCpu,
-    title: 'Technology-led',
-    content: 'Modern stack, AI-ready solutions, and data-driven decisions across all services.',
-    metric: '100%',
-    metricLabel: 'cloud-native',
-    progress: 100,
-  },
-  {
-    id: 'scale',
-    icon: FiTrendingUp,
-    title: 'Built to scale',
-    content: 'From startups to enterprises, we adapt our delivery and support to your size.',
-    metric: '15+',
-    metricLabel: 'industries',
-    progress: 95,
-  },
-  {
-    id: 'support',
-    icon: FiHeart,
-    title: 'Dedicated support',
-    content: 'Named account managers and clear escalation paths so you always have a point of contact.',
-    metric: 'Always on',
-    metricLabel: 'availability',
-    progress: 90,
-  },
+const VALUES: Item[] = [
+  { icon: FiTarget, title: 'Results driven', text: 'Success is measured by your outcomes.' },
+  { icon: FiZap, title: 'Innovation first', text: 'We test new tools so you get the best.' },
+  { icon: FiUsers, title: 'Partnership', text: 'Your growth is our growth.' },
+  { icon: FiAward, title: 'Excellence', text: 'Quality is never an accident.' },
+  { icon: FiShield, title: 'Integrity', text: 'We do what we say we will.' },
 ]
 
 const BRAND_CAROUSEL = [
@@ -148,19 +110,8 @@ const TESTIMONIALS = [
   { quote: 'TBG handled our campaign videos with real care for our mission. The final production was powerful and moving.', name: 'Saima Azfar', company: 'ICNA Relief' },
 ]
 
-const STORY_IMAGES = [
-  'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800',
-  'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800',
-  'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800',
-]
-
 export function OurStorySection() {
   const { ref, inView } = useCounterInView()
-  const [imageIndex, setImageIndex] = useState(0)
-  useEffect(() => {
-    const t = setInterval(() => setImageIndex((i) => (i + 1) % STORY_IMAGES.length), 4000)
-    return () => clearInterval(t)
-  }, [])
 
   return (
     <section id="story" className="relative overflow-hidden py-20 lg:py-28 bg-surface scroll-mt-24">
@@ -168,40 +119,55 @@ export function OurStorySection() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="space-y-6"
           >
-            <p className="section-label text-indigo-400">Our story</p>
-            <h2 className="font-heading text-3xl lg:text-4xl font-bold text-white">Who we are</h2>
-            <p className="text-white/80 leading-relaxed">
-              TBG started with a simple idea: bring real estate, technology, and creative services under one roof so our clients get one trusted partner instead of many.
+            <p className="section-label text-indigo-300 mb-3">Our story</p>
+            <h2 className="font-heading text-4xl lg:text-5xl font-bold text-white tracking-tight leading-[1.08]">
+              One partner instead of <span className="text-gradient-brand">many.</span>
+            </h2>
+            <p className="mt-6 text-lg text-white/70 leading-relaxed">
+              TBG started with a simple idea: clients shouldn't need a different agency for every part of their growth.
+              So we brought real estate, technology and creative production under one roof.
             </p>
-            <p className="text-white/80 leading-relaxed">
-              Today we serve clients across industries with integrated solutions, from property and advisory to software and media, backed by a team that cares about your outcomes.
+            <p className="mt-4 text-white/60 leading-relaxed">
+              Today one team can find your space, build your platform and tell your story, with AI working behind every
+              service to make it faster and smarter.
             </p>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
             className="relative"
           >
-            <div className="rounded-xl overflow-hidden border border-indigo-400/25 shadow-[0_0_60px_-15px_rgba(99,102,241,0.5)] aspect-[4/3] bg-white/5 relative">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={imageIndex}
-                  src={STORY_IMAGES[imageIndex]}
-                  alt="Our team and work"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                />
-              </AnimatePresence>
+            <div className="absolute inset-0 -z-0 rounded-full bg-indigo-500/20 blur-[90px]" aria-hidden />
+            <div className="relative grid gap-4">
+              {DIVISION_TILES.map(({ icon: Icon, name, text, accent }, i) => (
+                <motion.div
+                  key={name}
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.15 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-center gap-4 rounded-2xl border border-white/10 bg-[#0d1324]/85 p-5 backdrop-blur"
+                  style={{ marginLeft: `${i * 8}%` }}
+                >
+                  <span
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-white"
+                    style={{ background: `linear-gradient(135deg, ${accent}, #6366f1)`, boxShadow: `0 0 30px ${accent}55` }}
+                  >
+                    <Icon className="text-xl" />
+                  </span>
+                  <div>
+                    <p className="font-heading font-semibold text-white">{name}</p>
+                    <p className="text-sm text-white/55">{text}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
@@ -211,26 +177,22 @@ export function OurStorySection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-8 mt-16"
+          className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10"
         >
-          {STORY_STATS.map((s, i) => (
-            <div key={i} className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold bg-gradient-accent bg-clip-text text-transparent">
+          {STORY_STATS.map((s) => (
+            <div key={s.label} className="bg-[#0d1324] p-6 text-center">
+              <div className="font-heading text-4xl lg:text-5xl font-bold text-gradient-brand">
                 <Counter end={s.value} suffix={s.suffix} inView={inView} duration={2} />
               </div>
-              <p className="mt-1 text-white/60 text-sm font-medium">{s.label}</p>
+              <p className="mt-1 text-sm text-white/55">{s.label}</p>
             </div>
           ))}
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-20"
-        >
-          <h3 className="font-heading text-xl font-bold text-white mb-8">Milestones</h3>
-          <div className="flex flex-wrap gap-8 lg:gap-12 relative">
+        <div className="mt-16">
+          <p className="font-mono text-xs uppercase tracking-wider text-white/40 mb-6">Milestones</p>
+          <div className="relative grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="hidden md:block absolute left-0 right-0 top-[7px] h-px bg-gradient-to-r from-indigo-500/60 via-cyan-400/60 to-indigo-500/10" aria-hidden />
             {MILESTONES.map((m, i) => (
               <motion.div
                 key={m.year}
@@ -238,142 +200,96 @@ export function OurStorySection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="relative flex items-center gap-4 group"
+                className="relative"
               >
-                <div className="w-3 h-3 rounded-full bg-indigo-400 group-hover:scale-150 group-hover:shadow-glow transition-transform" />
-                {i < MILESTONES.length - 1 && (
-                  <div className="absolute left-6 top-1/2 w-16 h-px bg-white/20 -translate-y-1/2 hidden sm:block" />
-                )}
-                <div>
-                  <span className="text-indigo-400 font-bold">{m.year}</span>
-                  <span className="text-white/80 ml-2">{m.title}</span>
-                </div>
+                <span className="relative block h-[15px] w-[15px] rounded-full border-2 border-cyan-300 bg-primary shadow-glow-cyan" />
+                <p className="mt-4 font-heading text-2xl font-bold text-white">{m.year}</p>
+                <p className="text-sm text-white/60">{m.title}</p>
               </motion.div>
             ))}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-const DIFFERENTIATOR_GROUPS = [
-  { heading: 'What sets us apart', items: DIFFERENTIATORS },
-  { heading: 'Our core values', items: CORE_VALUES },
-]
-
-const ALL_TABS = DIFFERENTIATOR_GROUPS.flatMap((g) => g.items)
-
-export function DifferentiatorsSection() {
-  const [activeTab, setActiveTab] = useState(0)
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true })
-  const active = ALL_TABS[activeTab]
-  const isValue = CORE_VALUES.includes(active)
-
-  return (
-    <section id="different" className="relative overflow-hidden py-20 lg:py-28 bg-surface scroll-mt-24">
-      <SectionBackdrop variant="surface" />
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="font-heading text-3xl lg:text-4xl font-bold text-white text-center mb-4"
-        >
-          What makes us different
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-white/70 text-center max-w-2xl mx-auto mb-12"
-        >
-          Integrated services, technology, and the values that guide how we work with you.
-        </motion.p>
-
-        <div ref={ref} className="grid lg:grid-cols-2 gap-12 items-start">
-          <div className="space-y-6">
-            {DIFFERENTIATOR_GROUPS.map((group) => (
-              <div key={group.heading}>
-                <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-white/50">{group.heading}</p>
-                <div className="space-y-2">
-                  {group.items.map((d) => {
-                    const i = ALL_TABS.indexOf(d)
-                    return (
-                      <motion.button
-                        key={d.id}
-                        type="button"
-                        onClick={() => setActiveTab(i)}
-                        className={`w-full flex items-center gap-4 p-4 rounded-lg text-left transition-colors ${
-                          activeTab === i ? 'bg-indigo-500/20 border border-indigo-400/30' : 'bg-white/5 border border-transparent hover:bg-white/10'
-                        }`}
-                        whileHover={{ x: 4 }}
-                        whileTap={{ scale: 0.99 }}
-                      >
-                        <d.icon className={`text-2xl shrink-0 ${activeTab === i ? 'text-indigo-400' : 'text-white/60'}`} />
-                        <span className="font-semibold text-white">{d.title}</span>
-                      </motion.button>
-                    )
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="lg:sticky lg:top-28">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, x: 24 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -24 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-6"
-              >
-                <div>
-                  {active.quote && (
-                    <p className="mb-3 text-xl text-white italic">&ldquo;{active.quote}&rdquo;</p>
-                  )}
-                  <p className="text-white/80 leading-relaxed">{active.content}</p>
-                  {active.metric && (
-                    <div className="mt-4 flex items-baseline gap-2">
-                      <span className="text-3xl font-bold text-cyan-400">{active.metric}</span>
-                      <span className="text-white/60">{active.metricLabel}</span>
-                    </div>
-                  )}
-                </div>
-                <div className="flex items-center gap-2 text-emerald-400">
-                  <motion.span
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={inView ? { scale: 1, opacity: 1 } : {}}
-                    transition={{ delay: 0.2, type: 'spring', stiffness: 400 }}
-                  >
-                    <FiCheck className="w-6 h-6" strokeWidth={2.5} />
-                  </motion.span>
-                  <span className="text-sm font-medium">{isValue ? 'Core value' : 'Key differentiator'}</span>
-                </div>
-                {active.progress !== undefined && (
-                  <div>
-                    <div className="h-2 rounded-full bg-white/10 overflow-hidden">
-                      <motion.div
-                        className="h-full rounded-full bg-gradient-accent"
-                        initial={{ width: 0 }}
-                        animate={inView ? { width: `${active.progress}%` } : {}}
-                        transition={{ duration: 1, delay: 0.3 }}
-                      />
-                    </div>
-                    <p className="mt-1 text-white/50 text-xs">Capability level</p>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
           </div>
         </div>
       </div>
     </section>
   )
 }
+
+export function DifferentiatorsSection() {
+  return (
+    <section id="different" className="relative overflow-hidden py-20 lg:py-28 bg-surface scroll-mt-24">
+      <SectionBackdrop variant="surface" />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="section-label text-cyan-300 mb-3"
+          >
+            Why TBG
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-heading text-4xl lg:text-5xl font-bold text-white tracking-tight"
+          >
+            What makes us <span className="text-gradient-brand">different</span>
+          </motion.h2>
+        </div>
+
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {DIFFERENTIATORS.map(({ icon: Icon, title, text, stat, statLabel }, i) => (
+            <motion.div
+              key={title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-[#0d1324]/85 p-7 transition hover:border-indigo-400/40 ${
+                i === 0 ? 'lg:col-span-2 lg:row-span-1' : ''
+              } ${i === 3 ? 'lg:col-span-2' : ''}`}
+            >
+              <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-indigo-500/20 blur-[60px] opacity-0 transition group-hover:opacity-100" />
+              <div className="relative flex items-start justify-between gap-6">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-cyan-300 transition group-hover:bg-gradient-accent group-hover:text-white">
+                  <Icon className="text-xl" />
+                </span>
+                <div className="text-right">
+                  <p className="font-heading text-3xl font-bold text-white">{stat}</p>
+                  <p className="text-[11px] uppercase tracking-wider text-white/40">{statLabel}</p>
+                </div>
+              </div>
+              <h3 className="relative mt-6 font-heading text-xl font-bold text-white">{title}</h3>
+              <p className="relative mt-2 text-white/60 leading-relaxed">{text}</p>
+            </motion.div>
+          ))}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="rounded-3xl border border-white/10 bg-gradient-to-br from-indigo-500/15 to-cyan-400/10 p-7 md:col-span-2 lg:col-span-3"
+          >
+            <p className="font-mono text-xs uppercase tracking-wider text-white/50">Our values</p>
+            <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+              {VALUES.map(({ icon: Icon, title, text }) => (
+                <li key={title} className="flex items-start gap-3">
+                  <Icon className="mt-1 shrink-0 text-cyan-300" />
+                  <p className="text-sm text-white/70">
+                    <span className="font-semibold text-white">{title}. </span>
+                    {text}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 
 export function LogosSection() {
   return (
@@ -384,9 +300,9 @@ export function LogosSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="font-heading text-2xl lg:text-3xl font-bold text-white text-center"
+          className="font-mono text-xs uppercase tracking-[0.2em] text-white/45 text-center"
         >
-          Trusted by leading brands
+          Trusted by broadcasters, studios and organisations worldwide
         </motion.h2>
       </div>
       <div className="relative z-10 marquee-pause-on-hover">
@@ -415,59 +331,94 @@ export function LogosSection() {
 
 export function TestimonialsSection() {
   const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
   useEffect(() => {
-    const t = setInterval(() => setIndex((i) => (i + 1) % TESTIMONIALS.length), 5000)
+    if (paused) return
+    const t = setInterval(() => setIndex((i) => (i + 1) % TESTIMONIALS.length), 6000)
     return () => clearInterval(t)
-  }, [])
+  }, [paused])
+  const go = (d: number) => setIndex((i) => (i + d + TESTIMONIALS.length) % TESTIMONIALS.length)
+  const t = TESTIMONIALS[index]
 
   return (
     <section className="relative overflow-hidden py-20 lg:py-28 bg-surface">
       <SectionBackdrop variant="surface" />
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="font-heading text-3xl lg:text-4xl font-bold text-white text-center mb-16"
-        >
-          What clients say
-        </motion.h2>
-
-        <div className="relative">
-          <span className="absolute -top-4 -left-2 text-8xl text-indigo-400/20 font-serif">&ldquo;</span>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              className="card-glass p-8 lg:p-12 text-center relative"
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid gap-12 lg:grid-cols-12 items-center">
+        <div className="lg:col-span-4">
+          <p className="section-label text-indigo-300 mb-3">Testimonials</p>
+          <h2 className="font-heading text-4xl lg:text-5xl font-bold text-white tracking-tight">
+            What clients <span className="text-gradient-brand">say</span>
+          </h2>
+          <p className="mt-4 text-white/60">Broadcasters, studios and nonprofits who trust us with their story.</p>
+          <div className="mt-8 flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              className="rounded-full border border-white/15 bg-white/5 p-3 text-white hover:border-cyan-300/60"
+              aria-label="Previous testimonial"
             >
-              <div className="flex justify-center gap-1 mb-6">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <motion.span
-                    key={star}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.1 * star }}
-                  >
-                    <FiStar className="text-amber-400 fill-amber-400 inline text-xl" />
-                  </motion.span>
+              <FiChevronLeft />
+            </button>
+            <button
+              type="button"
+              onClick={() => go(1)}
+              className="rounded-full border border-white/15 bg-white/5 p-3 text-white hover:border-cyan-300/60"
+              aria-label="Next testimonial"
+            >
+              <FiChevronRight />
+            </button>
+            <span className="ml-2 font-mono text-sm text-white/40">
+              {String(index + 1).padStart(2, '0')} / {String(TESTIMONIALS.length).padStart(2, '0')}
+            </span>
+          </div>
+        </div>
+
+        <div
+          className="lg:col-span-8 relative"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-indigo-500/20 to-cyan-400/10 blur-2xl" aria-hidden />
+          <AnimatePresence mode="wait">
+            <motion.figure
+              key={index}
+              initial={{ opacity: 0, y: 16, filter: 'blur(6px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -16, filter: 'blur(6px)' }}
+              transition={{ duration: 0.4 }}
+              className="relative rounded-3xl border border-white/10 bg-[#0d1324]/90 p-8 lg:p-12"
+            >
+              <span className="absolute right-8 top-4 font-serif text-[120px] leading-none text-indigo-400/15" aria-hidden>
+                &rdquo;
+              </span>
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <FiStar key={s} className="fill-amber-400 text-amber-400" />
                 ))}
               </div>
-              <p className="text-xl text-white/90 italic">&ldquo;{TESTIMONIALS[index].quote}&rdquo;</p>
-              <div className="mt-8 flex flex-col items-center gap-2">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-400 flex items-center justify-center font-heading font-bold text-white text-lg">
-                  {TESTIMONIALS[index].name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase()}
-                </div>
-                <p className="font-heading font-bold text-white">{TESTIMONIALS[index].name}</p>
-                <p className="text-sm text-white/60">{TESTIMONIALS[index].company}</p>
-              </div>
-            </motion.div>
+              <blockquote className="mt-6 font-heading text-2xl lg:text-3xl font-medium leading-snug text-white">
+                &ldquo;{t.quote}&rdquo;
+              </blockquote>
+              <figcaption className="mt-8 flex items-center gap-4">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-accent font-heading font-bold text-white">
+                  {t.name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase()}
+                </span>
+                <span>
+                  <span className="block font-semibold text-white">{t.name}</span>
+                  <span className="block text-sm text-white/55">{t.company}</span>
+                </span>
+              </figcaption>
+            </motion.figure>
           </AnimatePresence>
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="relative mt-6 flex gap-2">
             {TESTIMONIALS.map((_, i) => (
-              <button key={i} type="button" onClick={() => setIndex(i)} className={`w-2.5 h-2.5 rounded-full ${index === i ? 'bg-cyan-400' : 'bg-white/30'}`} />
+              <button
+                key={i}
+                type="button"
+                onClick={() => setIndex(i)}
+                aria-label={`Show testimonial ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all ${index === i ? 'w-8 bg-cyan-400' : 'w-3 bg-white/25 hover:bg-white/40'}`}
+              />
             ))}
           </div>
         </div>
@@ -479,54 +430,63 @@ export function TestimonialsSection() {
 export function AboutCTASection() {
   const { openModal } = useContactModal()
   const ctas = [
-    { icon: FiBriefcase, title: 'Work with us', desc: 'Start a project or request a service.', href: '/contact', action: () => openModal(), primary: true },
-    { icon: FiUserPlus, title: 'Join our team', desc: 'See open roles and apply.', href: '/careers', action: () => {}, primary: false },
-    { icon: FiLink2, title: 'Become a partner', desc: 'Explore partnership opportunities.', href: '/contact', action: () => openModal(), primary: false },
+    { icon: FiBriefcase, title: 'Start a project', desc: 'Tell us what you need and get a clear plan, timeline and quote.', label: 'Get in touch', action: () => openModal() },
+    { icon: FiUserPlus, title: 'Join our team', desc: 'Engineers, creatives and property experts building what comes next.', label: 'See open roles', to: '/careers' },
+    { icon: FiLink2, title: 'Become a partner', desc: 'Agencies, developers and brands: let\'s create more together.', label: 'Explore partnerships', action: () => openModal({ service_interest: 'Other' }) },
   ]
 
   return (
     <section id="contact-cta" className="relative overflow-hidden py-20 lg:py-28 bg-primary scroll-mt-24">
-      <SectionBackdrop variant="primary" />
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <div className="hero-aurora" style={{ top: '40%', opacity: 0.3 }} />
+      </div>
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-3 gap-8">
-          {ctas.map((c, i) => (
-            <motion.div
-              key={c.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <Link
-                to={c.href}
-                onClick={(e) => {
-                  if (c.action) {
-                    e.preventDefault()
-                    c.action()
-                  }
-                }}
-                className={`block h-full p-8 rounded-xl border transition-all duration-300 group ${
-                  c.primary
-                    ? 'border-fuchsia-400/20 bg-surface hover:border-fuchsia-400/40 hover:shadow-glow-magenta'
-                    : 'border-white/10 bg-surface hover:border-indigo-400/30 hover:shadow-glow'
-                }`}
-              >
-                <div className={`inline-flex p-3 rounded-lg bg-gradient-to-br ${c.primary ? 'from-purple-500/30 to-pink-500/30' : 'from-white/10 to-white/5'} group-hover:scale-110 transition-transform`}>
-                  <c.icon className="text-2xl text-white" />
-                </div>
-                <h3 className="font-heading mt-4 text-xl font-bold text-white">{c.title}</h3>
-                <p className="mt-2 text-white/70 text-sm">{c.desc}</p>
-                <motion.span
-                  className={`inline-flex items-center gap-1 mt-4 font-medium text-sm ${c.primary ? 'text-gradient-magenta' : 'text-cyan-400'}`}
-                  whileHover={{ x: 4 }}
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="font-heading text-4xl sm:text-6xl font-bold text-white tracking-tight">
+            Let's build your <span className="text-shimmer-brand">future.</span>
+          </h2>
+          <p className="mt-4 text-lg text-white/65">Pick where you'd like to start.</p>
+        </div>
+        <div className="mt-12 grid md:grid-cols-3 gap-6">
+          {ctas.map((c, i) => {
+            const inner = (
+              <>
+                <span
+                  className={`inline-flex h-12 w-12 items-center justify-center rounded-xl text-white transition group-hover:scale-110 ${
+                    i === 0 ? 'bg-gradient-accent shadow-glow' : 'bg-white/10'
+                  }`}
                 >
-                  {c.primary ? 'Get in touch' : 'Learn more'} <FiChevronRight className={`text-sm ${c.primary ? 'text-fuchsia-400' : ''}`} />
-                </motion.span>
-              </Link>
-            </motion.div>
-          ))}
+                  <c.icon className="text-xl" />
+                </span>
+                <h3 className="mt-5 font-heading text-xl font-bold text-white">{c.title}</h3>
+                <p className="mt-2 text-sm text-white/60 leading-relaxed">{c.desc}</p>
+                <span className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-cyan-300">
+                  {c.label} <FiChevronRight className="transition group-hover:translate-x-1" />
+                </span>
+              </>
+            )
+            const cls = `group block h-full rounded-3xl border p-8 text-left transition-all duration-300 hover:-translate-y-1 ${
+              i === 0 ? 'border-indigo-400/40 bg-indigo-500/10 hover:shadow-glow' : 'border-white/10 bg-[#0d1324]/80 hover:border-indigo-400/30'
+            }`
+            return (
+              <motion.div
+                key={c.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                {c.to ? (
+                  <Link to={c.to} className={cls}>{inner}</Link>
+                ) : (
+                  <button type="button" onClick={c.action} className={`${cls} w-full`}>{inner}</button>
+                )}
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>
   )
 }
+
